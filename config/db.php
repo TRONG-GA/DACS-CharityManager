@@ -6,9 +6,12 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 
 // Base URL Configuration
-define('BASE_URL', '/charity_event');
+define('BASE_URL', '/DACS-CharityManager');
 define('SITE_NAME', 'Charity Event');
 define('SITE_TAGLINE', 'Nền tảng kết nối từ thiện minh bạch');
+// CSRF Security
+define('CSRF_TOKEN_EXPIRY', 3600);
+define('MIN_PASSWORD_LENGTH', 8);  // minimum password length
 
 // Upload Configuration
 define('UPLOAD_DIR', __DIR__ . '/../public/uploads/');
@@ -19,9 +22,10 @@ define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
 define('ITEMS_PER_PAGE', 12);
 
 // PDO Connection
+require_once __DIR__ . '/constants.php';
 try {
     $pdo = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
+        "mysql:host=" . DB_HOST . ";port=3309;dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
         DB_PASS,
         [

@@ -1,0 +1,25 @@
+# Charity Event - robots.txt
+
+User-agent: *
+Disallow: /admin/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /logs/
+Disallow: /benefactor/
+Disallow: /user/
+Disallow: /errors/
+Disallow: /public/uploads/documents/
+
+Allow: /
+Allow: /index.php
+Allow: /events.php
+Allow: /news.php
+Allow: /about.php
+Allow: /contact.php
+Allow: /public/css/
+Allow: /public/js/
+Allow: /public/uploads/*.jpg
+Allow: /public/uploads/*.png
+Allow: /public/uploads/*.webp
+
+Sitemap: http://localhost/charity_event/sitemap.xml

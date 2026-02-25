@@ -28,9 +28,10 @@ $pageDescription = $pageDescription ?? 'Kết nối những tấm lòng nhân á
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/style.css">
-    
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/style.css">    
     <!-- Additional CSS for specific pages -->
     <?php if (isset($additionalCSS)): ?>
         <?= $additionalCSS ?>
     <?php endif; ?>
+</head>
+<body>

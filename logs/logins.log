@@ -1,0 +1,15 @@
+[2026-02-25 13:34:42] Logout - ID: 2 | Email: test1@gmail.com | IP: ::1
+[2026-02-25 13:34:50] Successful Login - ID: 2 | Email: test1@gmail.com | IP: ::1 | User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0
+[2026-02-25 13:41:04] Logout - ID: 2 | Email: test1@gmail.com | IP: ::1
+[2026-02-25 13:41:32] Successful Login - ID: 2 | Email: test1@gmail.com | IP: ::1 | User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0
+[2026-02-25 13:41:57] Logout - ID: 2 | Email: test1@gmail.com | IP: ::1
+[2026-02-25 13:43:11] Logout - ID: 3 | Email: tronglen10123456@gmail.com | IP: ::1
+[2026-02-25 13:49:57] Successful Login - ID: 3 | Email: tronglen10123456@gmail.com | IP: ::1 | User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0
+[2026-02-25 13:50:00] Logout - ID: 3 | Email: tronglen10123456@gmail.com | IP: ::1
+[2026-02-25 13:50:04] Successful Login - ID: 3 | Email: tronglen10123456@gmail.com | IP: ::1 | User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0
+[2026-02-25 13:52:04] Logout - ID: 3 | Email: tronglen10123456@gmail.com | IP: ::1
+[2026-02-25 13:52:55] Successful Login - ID: 3 | Email: tronglen10123456@gmail.com | IP: ::1 | User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0
+[2026-02-25 14:51:00] Logout - ID: 3 | Email: tronglen10123456@gmail.com | IP: ::1
+[2026-02-25 14:51:05] Successful Login - ID: 3 | Email: tronglen10123456@gmail.com | IP: ::1 | User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0
+[2026-02-25 14:52:13] Logout - ID: 3 | Email: tronglen10123456@gmail.com | IP: ::1
+[2026-02-25 14:53:31] Successful Login - ID: 3 | Email: tronglen10123456@gmail.com | IP: ::1 | User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0

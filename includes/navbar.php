@@ -37,14 +37,14 @@ if (isLoggedIn()) {
                                 <i class="fas fa-cog me-1"></i>Admin
                             </a>
                         <?php endif; ?>
-                        <a href="<?= BASE_URL ?>/logout.php" class="text-white text-decoration-none">
+                        <a href="<?= BASE_URL ?>/auth/logout.php" class="text-white text-decoration-none">
                             <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất
                         </a>
                     <?php else: ?>
-                        <a href="<?= BASE_URL ?>/login.php" class="text-white text-decoration-none me-3">
+                        <a href="<?= BASE_URL ?>/auth/login.php" class="text-white text-decoration-none me-3">
                             <i class="fas fa-sign-in-alt me-1"></i>Đăng nhập
                         </a>
-                        <a href="<?= BASE_URL ?>/register.php" class="text-white text-decoration-none">
+                        <a href="<?= BASE_URL ?>/auth/register.php" class="text-white text-decoration-none">
                             <i class="fas fa-user-plus me-1"></i>Đăng ký
                         </a>
                     <?php endif; ?>

@@ -1,0 +1,22 @@
+# Prevent directory browsing
+Options -Indexes
+
+# Prevent PHP execution
+<FilesMatch "\.php$">
+    Require all denied
+</FilesMatch>
+
+# Allow only specific file types
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|pdf|doc|docx|xls|xlsx)$">
+    Require all granted
+</FilesMatch>
+
+# Deny everything else
+<FilesMatch "^(?!\.(jpg|jpeg|png|gif|webp|pdf|doc|docx|xls|xlsx)$)">
+    Require all denied
+</FilesMatch>
+
+# Force download for documents
+<FilesMatch "\.(pdf|doc|docx|xls|xlsx)$">
+    Header set Content-Disposition attachment
+</FilesMatch>

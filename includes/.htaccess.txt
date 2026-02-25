@@ -1,0 +1,8 @@
+# Deny all access to includes directory
+Require all denied
+
+# Or for Apache 2.2
+<IfVersion < 2.4>
+    Order deny,allow
+    Deny from all
+</IfVersion>
