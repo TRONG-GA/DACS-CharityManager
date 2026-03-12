@@ -3,7 +3,6 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3309
-<<<<<<< HEAD
 -- Generation Time: Feb 25, 2026 at 04:34 PM
 =======
 -- Generation Time: Mar 09, 2026 at 08:01 AM
@@ -25,7 +24,6 @@ SET time_zone = "+00:00";
 -- Database: `charity_event`
 --
 
-<<<<<<< HEAD
 -- --------------------------------------------------------
 
 --
@@ -780,21 +778,15 @@ CREATE TABLE `event_volunteers` (
   `phone` varchar(20) NOT NULL,
   `date_of_birth` date DEFAULT NULL,
   `gender` enum('male','female','other') DEFAULT NULL,
-<<<<<<< HEAD
-=======
   `birth_date` date DEFAULT NULL,
->>>>>>> 31c9649 (update local changes)
   `occupation` varchar(100) DEFAULT NULL,
   `skills` text DEFAULT NULL,
   `availability` text DEFAULT NULL,
   `experience` text DEFAULT NULL,
   `motivation` text NOT NULL,
-<<<<<<< HEAD
-=======
   `available_weekday` tinyint(1) DEFAULT 0,
   `available_weekend` tinyint(1) DEFAULT 0,
   `available_evening` tinyint(1) DEFAULT 0,
->>>>>>> 31c9649 (update local changes)
   `emergency_contact_name` varchar(100) DEFAULT NULL,
   `emergency_contact_phone` varchar(20) DEFAULT NULL,
   `emergency_contact_relation` varchar(50) DEFAULT NULL,
@@ -814,7 +806,6 @@ CREATE TABLE `event_volunteers` (
 -- Dumping data for table `event_volunteers`
 --
 
-<<<<<<< HEAD
 INSERT INTO `event_volunteers` (`id`, `user_id`, `event_id`, `fullname`, `email`, `phone`, `date_of_birth`, `gender`, `occupation`, `skills`, `availability`, `experience`, `motivation`, `emergency_contact_name`, `emergency_contact_phone`, `emergency_contact_relation`, `status`, `rejection_reason`, `checked_in_at`, `checked_out_at`, `attendance_confirmed`, `volunteer_feedback`, `organizer_feedback`, `rating`, `created_at`, `updated_at`) VALUES
 (1, 5, 1, 'Phạm Minh Anh', 'user1@test.com', '0934567890', NULL, 'female', 'Nhân viên văn phòng', '[\"Kế toán\", \"Tin học văn phòng\"]', NULL, NULL, 'Muốn giúp đỡ trẻ em có hoàn cảnh khó khăn', NULL, NULL, NULL, 'approved', NULL, NULL, NULL, 0, NULL, NULL, NULL, '2026-02-15 15:17:28', '2026-02-25 15:17:28'),
 (2, 6, 1, 'Hoàng Thị Lan', 'user2@test.com', '0945678901', NULL, 'female', 'Giáo viên', '[\"Giảng dạy\", \"Tổ chức sự kiện\"]', NULL, NULL, 'Yêu trẻ em, muốn lan tỏa yêu thương', NULL, NULL, NULL, 'approved', NULL, NULL, NULL, 0, NULL, NULL, NULL, '2026-02-16 15:17:28', '2026-02-25 15:17:28'),
@@ -872,7 +863,7 @@ CREATE TABLE `news` (
   `status` enum('draft','published','archived') DEFAULT 'draft',
   `published_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-<<<<<<< HEAD
+
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 =======
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -884,7 +875,7 @@ CREATE TABLE `news` (
 -- Dumping data for table `news`
 --
 
-<<<<<<< HEAD
+
 INSERT INTO `news` (`id`, `author_id`, `title`, `slug`, `excerpt`, `content`, `thumbnail`, `gallery`, `category`, `is_featured`, `is_breaking`, `priority`, `views`, `meta_description`, `meta_keywords`, `status`, `published_at`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Ra mắt nền tảng Charity Event - Kết nối yêu thương', 'ra-mat-nen-tang-charity-event', 'Charity Event chính thức ra mắt với sứ mệnh kết nối những tấm lòng nhân ái, mang đến sự minh bạch và hiệu quả cho hoạt động từ thiện.', '<p>Ngày 01/01/2026, nền tảng <strong>Charity Event</strong> chính thức ra mắt cộng đồng...</p>', 'news-1.jpg', NULL, 'announcement', 1, 0, 0, 0, NULL, NULL, 'published', '2026-02-25 15:17:06', '2026-02-25 15:17:06', '2026-02-25 15:17:06'),
 (2, 1, 'Hướng dẫn quyên góp trên Charity Event', 'huong-dan-quyen-gop', 'Quy trình quyên góp đơn giản, nhanh chóng và an toàn trên nền tảng Charity Event.', '<p>Bài viết hướng dẫn chi tiết cách quyên góp...</p>', 'news-2.jpg', NULL, 'news', 0, 0, 0, 0, NULL, NULL, 'published', '2026-02-25 15:17:06', '2026-02-25 15:17:06', '2026-02-25 15:17:06');
@@ -895,7 +886,7 @@ INSERT INTO `news` (`id`, `author_id`, `title`, `slug`, `excerpt`, `content`, `t
 (5, 1, 'Khởi động chiến dịch \"Trồng 10,000 cây xanh\" tại Hà Giang', 'khoi-dong-chien-dich-trong-10000-cay-xanh-tai-ha-giang', NULL, '<p>Ngày 20/2/2026, Ban tổ chức chiến dịch \"Trồng 10,000 cây xanh\" đã họp báo công bố chính thức khởi động dự án tại Hà Giang.</p>\r\n <p>Chiến dịch sẽ kéo dài 2 tháng (từ tháng 3 đến tháng 4) với sự tham gia của 500 tình nguyện viên và người dân địa phương.</p>\r\n <h3>Mục tiêu của chiến dịch</h3>\r\n <ul>\r\n <li>Trồng 10,000 cây xanh các loại (cây ăn quả, cây lấy gỗ)</li>\r\n <li>Phủ xanh 50 hecta đất trống tại các xã vùng cao</li>\r\n <li>Nâng cao nhận thức về bảo vệ môi trường</li>\r\n <li>Tạo sinh kế bền vững cho người dân</li>\r\n </ul>\r\n <p>Dự án được tài trợ bởi nhiều doanh nghiệp và cá nhân với tổng kinh phí 700 triệu đồng.</p>', 'news3.jpg', NULL, 'announcement', 0, 0, 0, 678, NULL, NULL, 'published', '2026-02-27 08:19:45', '2026-02-27 08:19:45', '2026-02-28 08:19:45', 'Chiến dịch trồng cây xanh quy mô lớn sẽ được triển khai tại tỉnh Hà Giang từ tháng 3/2026 với mục tiêu phủ xanh 50 hecta đất trống.'),
 (6, 1, 'Cứu trợ khẩn cấp cho đồng bào lũ lụt miền Trung', 'cuu-tro-khan-cap-cho-dong-bao-lu-lut-mien-trung', NULL, '<p>Do ảnh hưởng của bão số 3, nhiều khu vực tại Hà Tĩnh và Quảng Bình đã bị ngập lụt nghiêm trọng. Hàng nghìn hộ dân phải di dời, mất nhà cửa và tài sản.</p>\r\n <p>Ngay sau khi nhận được tin, các tổ chức từ thiện đã khẩn trương huy động nguồn lực và tổ chức đoàn cứu trợ đến hiện trường.</p>\r\n <h3>Những gì đã được hỗ trợ</h3>\r\n <ul>\r\n <li>1,000 thùng mì tôm</li>\r\n <li>500 thùng nước uống</li>\r\n <li>300 bộ quần áo</li>\r\n <li>200 chăn màn</li>\r\n <li>Thuốc men và vật tư y tế</li>\r\n </ul>\r\n <p>Tổng giá trị hỗ trợ ước tính 300 triệu đồng. Đoàn vẫn tiếp tục kêu gọi quyên góp để hỗ trợ thêm cho bà con.</p>', 'news4.jpg', NULL, '', 0, 0, 0, 894, NULL, NULL, 'published', '2026-02-28 08:19:45', '2026-02-28 08:19:45', '2026-03-02 04:16:45', 'Đoàn cứu trợ đã đến các vùng bị ảnh hưởng nặng nề bởi lũ lụt tại Hà Tĩnh và Quảng Bình để hỗ trợ lương thực, nước uống và thuốc men.'),
 (7, 1, 'Phát động chiến dịch hiến máu nhân đạo \"Giọt hồng yêu thương\"', 'phat-dong-chien-dich-hien-mau-nhan-dao-giot-hong-yeu-thuong', NULL, '<p>Hội Chữ thập đỏ Việt Nam phối hợp cùng các bệnh viện sẽ tổ chức chiến dịch hiến máu tình nguyện \"Giọt hồng yêu thương\" từ ngày 1/3 đến 15/3/2026.</p>\r\n <p>Chiến dịch nhằm kêu gọi cộng đồng tham gia hiến máu tình nguyện, góp phần cứu chữa người bệnh trong tình trạng dự trữ máu đang thiếu hụt.</p>\r\n <h3>Thông tin tham gia</h3>\r\n <p><strong>Điều kiện:</strong> Từ 18-60 tuổi, cân nặng từ 45kg, sức khỏe tốt</p>\r\n <p><strong>Địa điểm:</strong> 10 điểm hiến máu tại Hà Nội, TP.HCM, Đà Nẵng và các tỉnh</p>\r\n <p><strong>Quà tặng:</strong> Mỗi người hiến máu sẽ nhận được giấy chứng nhận, quà lưu niệm và được khám sức khỏe miễn phí</p>', 'news5.jpg', NULL, 'announcement', 0, 0, 0, 448, NULL, NULL, 'published', '2026-02-21 08:19:45', '2026-02-20 08:19:45', '2026-03-02 04:30:58', 'Chiến dịch hiến máu sẽ được tổ chức tại 10 tỉnh thành trên cả nước với mục tiêu tiếp nhận 5,000 đơn vị máu.');
->>>>>>> 31c9649 (update local changes)
+
 
 -- --------------------------------------------------------
 
@@ -959,7 +950,7 @@ CREATE TABLE `rate_limits` (
   `last_attempt_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-<<<<<<< HEAD
+
 =======
 --
 -- Dumping data for table `rate_limits`
@@ -1018,7 +1009,7 @@ INSERT INTO `statistics` (`id`, `total_events`, `total_donations`, `total_donors
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD
+
 =======
 -- Table structure for table `statistics_cache`
 --
@@ -1136,7 +1127,7 @@ CREATE TABLE `users` (
   `phone` varchar(20) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT 'default-avatar.png',
   `address` text DEFAULT NULL,
-<<<<<<< HEAD
+
 =======
   `bio` text DEFAULT NULL,
 >>>>>>> 31c9649 (update local changes)
@@ -1149,7 +1140,7 @@ CREATE TABLE `users` (
   `status` enum('active','inactive','banned') DEFAULT 'active',
   `last_login` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-<<<<<<< HEAD
+
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 =======
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -1167,7 +1158,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-<<<<<<< HEAD
+
 INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `avatar`, `address`, `city`, `district`, `role`, `benefactor_status`, `benefactor_verified_at`, `benefactor_verified_by`, `status`, `last_login`, `created_at`, `updated_at`) VALUES
 (1, 'Administrator', 'admin@charityevent.vn', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, 'default-avatar.png', NULL, NULL, NULL, 'admin', 'none', NULL, NULL, 'active', NULL, '2026-02-25 15:17:06', '2026-02-25 15:17:06'),
 (2, 'Nguyễn Văn Hảo', 'benefactor1@test.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0987654321', 'default-avatar.png', NULL, NULL, NULL, 'benefactor', 'approved', NULL, NULL, 'active', NULL, '2026-02-25 15:17:28', '2026-02-25 15:17:28'),
@@ -1208,7 +1199,6 @@ CREATE TABLE `user_terms_acceptance` (
   `accepted_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-<<<<<<< HEAD
 =======
 -- --------------------------------------------------------
 
@@ -1234,7 +1224,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
-<<<<<<< HEAD
+
 =======
 -- Indexes for table `admin_logs`
 --
@@ -1291,7 +1281,7 @@ ALTER TABLE `benefactor_applications`
   ADD KEY `idx_user_id` (`user_id`);
 
 --
-<<<<<<< HEAD
+
 =======
 -- Indexes for table `charity_registrations`
 --
@@ -1307,7 +1297,7 @@ ALTER TABLE `contacts`
   ADD KEY `idx_status` (`status`);
 
 --
-<<<<<<< HEAD
+
 =======
 -- Indexes for table `dashboard_widgets`
 --
@@ -1327,7 +1317,7 @@ ALTER TABLE `donations`
   ADD KEY `idx_created_at` (`created_at`);
 
 --
-<<<<<<< HEAD
+
 =======
 -- Indexes for table `email_templates`
 --
@@ -1412,7 +1402,7 @@ ALTER TABLE `rate_limits`
   ADD KEY `idx_action_key` (`action_key`);
 
 --
-<<<<<<< HEAD
+
 =======
 -- Indexes for table `report_schedules`
 --
@@ -1430,7 +1420,7 @@ ALTER TABLE `statistics`
   ADD PRIMARY KEY (`id`);
 
 --
-<<<<<<< HEAD
+
 =======
 -- Indexes for table `statistics_cache`
 --
@@ -1492,7 +1482,7 @@ ALTER TABLE `user_terms_acceptance`
 --
 
 --
-<<<<<<< HEAD
+
 =======
 -- AUTO_INCREMENT for table `admin_logs`
 --
@@ -1531,7 +1521,7 @@ ALTER TABLE `benefactor_applications`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
-<<<<<<< HEAD
+
 =======
 -- AUTO_INCREMENT for table `charity_registrations`
 --
@@ -1546,7 +1536,7 @@ ALTER TABLE `contacts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
-<<<<<<< HEAD
+
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
@@ -1586,21 +1576,21 @@ ALTER TABLE `event_updates`
 -- AUTO_INCREMENT for table `event_volunteers`
 --
 ALTER TABLE `event_volunteers`
-<<<<<<< HEAD
+
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 =======
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
->>>>>>> 31c9649 (update local changes)
+
 
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-<<<<<<< HEAD
+
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 =======
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
->>>>>>> 31c9649 (update local changes)
+
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -1624,7 +1614,7 @@ ALTER TABLE `password_resets`
 -- AUTO_INCREMENT for table `rate_limits`
 --
 ALTER TABLE `rate_limits`
-<<<<<<< HEAD
+
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 =======
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
@@ -1634,7 +1624,7 @@ ALTER TABLE `rate_limits`
 --
 ALTER TABLE `report_schedules`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
->>>>>>> 31c9649 (update local changes)
+
 
 --
 -- AUTO_INCREMENT for table `statistics`
@@ -1643,7 +1633,7 @@ ALTER TABLE `statistics`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
-<<<<<<< HEAD
+
 =======
 -- AUTO_INCREMENT for table `statistics_cache`
 --
@@ -1657,7 +1647,7 @@ ALTER TABLE `system_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
->>>>>>> 31c9649 (update local changes)
+
 -- AUTO_INCREMENT for table `terms_conditions`
 --
 ALTER TABLE `terms_conditions`
@@ -1673,11 +1663,11 @@ ALTER TABLE `transparency_reports`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-<<<<<<< HEAD
+
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 =======
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
->>>>>>> 31c9649 (update local changes)
+
 
 --
 -- AUTO_INCREMENT for table `user_terms_acceptance`
@@ -1690,7 +1680,7 @@ ALTER TABLE `user_terms_acceptance`
 --
 
 --
-<<<<<<< HEAD
+
 =======
 -- Constraints for table `admin_logs`
 --
@@ -1729,7 +1719,7 @@ ALTER TABLE `benefactor_applications`
   ADD CONSTRAINT `benefactor_applications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
-<<<<<<< HEAD
+
 =======
 -- Constraints for table `dashboard_widgets`
 --
@@ -1737,7 +1727,7 @@ ALTER TABLE `dashboard_widgets`
   ADD CONSTRAINT `dashboard_widgets_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
->>>>>>> 31c9649 (update local changes)
+
 -- Constraints for table `donations`
 --
 ALTER TABLE `donations`
@@ -1777,7 +1767,7 @@ ALTER TABLE `notifications`
   ADD CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
-<<<<<<< HEAD
+
 =======
 -- Constraints for table `report_schedules`
 --
