@@ -821,7 +821,7 @@ main {
 @media (max-width: 768px) {
   .hero-news-swiper,
   .hero-slide-item {
-    height: 500px;
+    height: 400px;
   }
 
   .hero-slide-item h1 {
@@ -886,4 +886,9 @@ main {
   .navbar-nav .nav-link {
     width: 100%;
   }
+}
+.navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }

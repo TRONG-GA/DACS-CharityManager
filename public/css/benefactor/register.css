@@ -1,0 +1,397 @@
+/* =========================================
+   CSS CHUẨN CHO CẢ 3 BƯỚC (ĐĂNG KÝ 1, 2, 3)
+   Màu nền: Hồng/Cam nhạt (#f39b9b)
+   Màu chủ đạo/Nút/Active: Đỏ (#dc3545)
+========================================= */
+
+/* --- 1. TỔNG THỂ TRANG VÀ BACKGROUND --- */
+.register-main-bg {
+    background-color: #f39b9b;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333;
+    margin: 0;
+}
+
+.page-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.page-title {
+    text-align: center;
+    font-weight: 500;
+    font-size: 26px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    color: #111;
+}
+
+/* --- 2. THANH TIẾN TRÌNH (STEPPER CHUYÊN NGHIỆP) --- */
+.stepper-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.stepper-bg-line {
+    position: absolute;
+    top: 15px;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background-color: #c9c9c9;
+    z-index: 1;
+}
+
+.stepper-active-line {
+    position: absolute;
+    top: 15px;
+    left: 15%;
+    height: 1px;
+    background-color: #dc3545;
+    z-index: 2;
+    transition: width 0.3s ease;
+}
+
+.step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 3;
+}
+
+.step-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #999;
+    color: white; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 15px;
+    box-shadow: 0 0 0 8px #f39b9b; 
+}
+
+.step.completed .step-icon,
+.step.active .step-icon {
+    background-color: #dc3545;
+}
+
+.step-text {
+    font-size: 14px;
+    color: #444;
+    text-align: center;
+    max-width: 280px;
+    line-height: 1.4;
+}
+
+/* --- 3. ẢNH BANNER BƯỚC 1 --- */
+.banner-wrapper {
+    margin-bottom: 24px;
+}
+
+.banner-img {
+    width: 100%;
+    height: auto;
+    min-height: 250px;
+    background-color: #ffead6;
+    border-radius: 6px;
+    display: block;
+    object-fit: cover;
+}
+
+/* --- 4. KHỐI FORM VÀ CARD BỌC NỘI DUNG --- */
+.form-card, .card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-header, .card-header-orange {
+    background-color: #dc3545;
+    color: white;
+    padding: 18px 25px;
+    font-weight: bold;
+    font-size: 17px;
+    border-radius: 6px 6px 0 0;
+    margin-bottom: -15px; 
+    position: relative;
+    z-index: 1;
+}
+
+.form-group, .card {
+    background-color: white;
+    border-radius: 6px;
+    padding: 25px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.form-group:first-of-type, .card-attached {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* --- 5. TIÊU ĐỀ CÂU HỎI VÀ LỖI VALIDATE --- */
+.question-label, .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #111;
+}
+
+.question-label-small {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* Dấu * bắt buộc */
+.req, 
+.form-group label span:not(.error-text, .label-desc),
+.question-label span:not(.error-text, .label-desc),
+.question-label-small span:not(.error-text, .label-desc) {
+    color: #d32f2f; 
+}
+
+.label-desc {
+    font-weight: normal;
+    font-size: 13px;
+    color: #5f6368;
+    display: block;
+    margin-top: 5px;
+}
+
+.error-text {
+    color: #d32f2f;
+    font-size: 14px;
+    font-weight: normal;
+    margin-left: 10px;
+    font-style: italic;
+}
+
+/* --- 6. CÁC KIỂU Ô NHẬP LIỆU (INPUT) --- */
+.form-input-line {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #111;
+    padding: 8px 0;
+    font-size: 15px;
+    background: transparent;
+    outline: none;
+    transition: border-bottom-color 0.2s;
+}
+.form-input-line:focus {
+    border-bottom: 2px solid #dc3545;
+}
+
+.input-block {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    outline: none;
+    font-size: 15px;
+    padding: 8px 10px;
+    background: white;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+.input-block:focus {
+    border-color: #dc3545;
+}
+
+.other-input-line {
+    border: none;
+    border-bottom: 1px solid #333;
+    outline: none;
+    margin-left: 10px;
+    width: 250px;
+    font-style: italic;
+    background: transparent;
+}
+
+.form-input-line::placeholder, .input-block::placeholder, .other-input-line::placeholder {
+    color: #999;
+}
+
+/* --- 7. CHECKBOX & RADIO TRẮC NGHIỆM --- */
+.checkbox-group, .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 15px;
+}
+
+.checkbox-group label, .radio-group label {
+    display: flex;
+    align-items: flex-start; 
+    gap: 10px;
+    cursor: pointer;
+    line-height: 1.4;
+    font-weight: normal !important; 
+}
+
+.checkbox-group input[type="checkbox"], 
+.radio-group input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #dc3545; 
+    cursor: pointer;
+    margin: 2px 0 0 0;
+    flex-shrink: 0;
+}
+
+/* --- 8. NÚT UPLOAD FILE & HIỂN THỊ TÊN FILE --- */
+.file-upload-wrapper input[type="file"] {
+    display: none;
+}
+
+.btn-upload {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    color: #1a73e8;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+.btn-upload:hover {
+    background: #f8f9fa;
+}
+.btn-upload svg {
+    fill: #1a73e8;
+}
+
+/* Danh sách hiển thị tên file */
+.file-name-list {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.file-name-item {
+    font-size: 14px;
+    color: #333;
+    background: #f8f9fa;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px dashed #ccc;
+    display: inline-block;
+    word-break: break-all;
+}
+.file-name-item::before {
+    content: '📎';
+    margin-right: 6px;
+}
+
+/* --- 9. FOOTER & NÚT ĐIỀU HƯỚNG --- */
+.form-footer {
+    display: flex;
+    justify-content: space-between; 
+    margin-top: 30px;
+    padding-bottom: 20px;
+}
+
+.form-footer:has(> button:only-child) {
+    justify-content: flex-end;
+}
+
+.btn-submit, .btn-action {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 35px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.btn-submit:hover, .btn-action:hover {
+    opacity: 0.85;
+}
+
+/* --- 10. TIỆN ÍCH ẨN/HIỆN (UTILITIES) --- */
+.hidden {
+    display: none !important;
+}
+
+/* --- 11. CỬA SỔ XÁC NHẬN (MODAL BƯỚC 3) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal-card {
+    background-color: white;
+    width: 90%;
+    max-width: 520px;
+    border-radius: 6px;
+    padding: 25px;
+    box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
+    box-sizing: border-box;
+}
+.modal-title {
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+.modal-desc {
+    margin: 0 0 30px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+}
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+.btn-text {
+    background: none;
+    border: none;
+    color: #dc3545;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+.btn-text:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+@media (max-width: 768px) {
+    .stepper-bg-line, .stepper-active-line { display: none; } 
+    .step-icon { box-shadow: none; }
+    .step-text { font-size: 12px; }
+    .form-footer { flex-direction: column-reverse; gap: 15px; }
+    .btn-submit, .btn-action { width: 100%; }
+}

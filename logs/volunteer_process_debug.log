@@ -1,0 +1,14 @@
+
+====================
+2026-02-27 10:23:28 - Script started
+POST request OK
+CSRF passed
+Rate limit passed
+Data received - Email: tronglen10123456@gmail.com | Phone: 0987846512
+Validation failed: Bạn đã đăng ký cho sự kiện này rồi
+
+====================
+2026-02-27 10:32:34 - Script started
+POST request OK
+CSRF passed
+Rate limit failed: Bạn đã vượt quá số lần thử. Vui lòng thử lại sau 36 phút.

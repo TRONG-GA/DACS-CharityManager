@@ -53,17 +53,17 @@
                 <h6 class="text-uppercase mb-3">Liên kết</h6>
                 <ul class="list-unstyled">
                     <li class="mb-2">
-                        <a href="<?= BASE_URL ?>/about.php" class="text-white-50 text-decoration-none hover-text-white">
+                        <a href="<?= BASE_URL ?>/pages/about.php" class="text-white-50 text-decoration-none hover-text-white">
                             <i class="fas fa-chevron-right me-2 small"></i>Về chúng tôi
                         </a>
                     </li>
                     <li class="mb-2">
-                        <a href="<?= BASE_URL ?>/events.php" class="text-white-50 text-decoration-none hover-text-white">
+                        <a href="<?= BASE_URL ?>/events/events.php" class="text-white-50 text-decoration-none hover-text-white">
                             <i class="fas fa-chevron-right me-2 small"></i>Sự kiện
                         </a>
                     </li>
                     <li class="mb-2">
-                        <a href="<?= BASE_URL ?>/news.php" class="text-white-50 text-decoration-none hover-text-white">
+                        <a href="<?= BASE_URL ?>/news/news.php" class="text-white-50 text-decoration-none hover-text-white">
                             <i class="fas fa-chevron-right me-2 small"></i>Tin tức
                         </a>
                     </li>
@@ -73,7 +73,7 @@
                         </a>
                     </li>
                     <li class="mb-2">
-                        <a href="<?= BASE_URL ?>/contact.php" class="text-white-50 text-decoration-none hover-text-white">
+                        <a href="<?= BASE_URL ?>/pages/contact.php" class="text-white-50 text-decoration-none hover-text-white">
                             <i class="fas fa-chevron-right me-2 small"></i>Liên hệ
                         </a>
                     </li>
@@ -85,27 +85,27 @@
                 <h6 class="text-uppercase mb-3">Hỗ trợ</h6>
                 <ul class="list-unstyled">
                     <li class="mb-2">
-                        <a href="<?= BASE_URL ?>/faq.php" class="text-white-50 text-decoration-none hover-text-white">
+                        <a href="<?= BASE_URL ?>/pages/faq.php" class="text-white-50 text-decoration-none hover-text-white">
                             <i class="fas fa-chevron-right me-2 small"></i>Câu hỏi thường gặp
                         </a>
                     </li>
                     <li class="mb-2">
-                        <a href="<?= BASE_URL ?>/how-it-works.php" class="text-white-50 text-decoration-none hover-text-white">
+                        <a href="<?= BASE_URL ?>/pages/how-it-works.php" class="text-white-50 text-decoration-none hover-text-white">
                             <i class="fas fa-chevron-right me-2 small"></i>Hướng dẫn sử dụng
                         </a>
                     </li>
                     <li class="mb-2">
-                        <a href="<?= BASE_URL ?>/privacy.php" class="text-white-50 text-decoration-none hover-text-white">
+                        <a href="<?= BASE_URL ?>/pages/privacy.php" class="text-white-50 text-decoration-none hover-text-white">
                             <i class="fas fa-chevron-right me-2 small"></i>Chính sách bảo mật
                         </a>
                     </li>
                     <li class="mb-2">
-                        <a href="<?= BASE_URL ?>/terms.php" class="text-white-50 text-decoration-none hover-text-white">
+                        <a href="<?= BASE_URL ?>/pages/terms.php" class="text-white-50 text-decoration-none hover-text-white">
                             <i class="fas fa-chevron-right me-2 small"></i>Điều khoản sử dụng
                         </a>
                     </li>
                     <li class="mb-2">
-                        <a href="<?= BASE_URL ?>/transparency.php" class="text-white-50 text-decoration-none hover-text-white">
+                        <a href="<?= BASE_URL ?>/pages/transparency.php" class="text-white-50 text-decoration-none hover-text-white">
                             <i class="fas fa-chevron-right me-2 small"></i>Minh bạch tài chính
                         </a>
                     </li>

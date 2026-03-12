@@ -1,6 +1,6 @@
 <?php
 /**
- * Security Functions
+ * Security Functions includes/security.php
  * CSRF Protection, XSS Prevention, Rate Limiting, Input Validation
  */
 

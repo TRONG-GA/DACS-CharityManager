@@ -74,7 +74,7 @@ if (isLoggedIn()) {
             
             <div class="col-md-5">
                 <!-- Search Bar -->
-                <form action="<?= BASE_URL ?>/search.php" method="GET" class="search-form">
+                <form action="<?= BASE_URL ?>/events/search_events.php" method="GET" class="search-form">
                     <div class="input-group">
                         <input type="text" name="q" class="form-control" placeholder="Tìm kiếm sự kiện, tin tức..." 
                                value="<?= isset($_GET['q']) ? sanitize($_GET['q']) : '' ?>">
@@ -136,20 +136,20 @@ if (isLoggedIn()) {
                         <i class="fas fa-info-circle me-1"></i>GIỚI THIỆU
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/about.php">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/pages/about.php">
                             <i class="fas fa-building me-2"></i>Về Charity Event
                         </a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/mission.php">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/pages/mission.php">
                             <i class="fas fa-bullseye me-2"></i>Sứ mệnh & Tầm nhìn
                         </a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/how-it-works.php">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/pages/how-it-works.php">
                             <i class="fas fa-cogs me-2"></i>Cách thức hoạt động
                         </a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/team.php">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/pages/team.php">
                             <i class="fas fa-users me-2"></i>Đội ngũ phát triển
                         </a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/faq.php">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/pages/faq.php">
                             <i class="fas fa-question-circle me-2"></i>Câu hỏi thường gặp
                         </a></li>
                     </ul>
@@ -162,27 +162,27 @@ if (isLoggedIn()) {
                         <i class="fas fa-calendar-alt me-1"></i>SỰ KIỆN
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events.php">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events/events.php">
                             <i class="fas fa-fire text-danger me-2"></i>Đang diễn ra
                         </a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events.php?status=upcoming">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events/events.php?status=upcoming">
                             <i class="fas fa-clock text-warning me-2"></i>Sắp diễn ra
                         </a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events.php?status=completed">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events/events.php?status=completed">
                             <i class="fas fa-check-circle text-success me-2"></i>Đã hoàn thành
                         </a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li class="dropdown-header">Danh mục</li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events.php?category=medical">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events/events.php?category=medical">
                             <i class="fas fa-heartbeat text-danger me-2"></i>Y tế & Sức khỏe
                         </a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events.php?category=education">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events/events.php?category=education">
                             <i class="fas fa-graduation-cap text-primary me-2"></i>Giáo dục
                         </a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events.php?category=disaster">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events/events.php?category=disaster">
                             <i class="fas fa-exclamation-triangle text-warning me-2"></i>Thiên tai & Khẩn cấp
                         </a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events.php?category=children">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/events/events.php?category=children">
                             <i class="fas fa-child text-info me-2"></i>Trẻ em & Người già
                         </a></li>
                         <?php if (isLoggedIn()): ?>
@@ -203,7 +203,7 @@ if (isLoggedIn()) {
                     </a>
                     <ul class="dropdown-menu">
                         <?php if (!isBenefactorVerified() && !isAdmin()): ?>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/benefactor/apply.php">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/benefactor/register0.php">
                             <i class="fas fa-user-check text-warning me-2"></i>Đăng ký Nhà hảo tâm
                         </a></li>
                         <li><hr class="dropdown-divider"></li>
@@ -232,7 +232,7 @@ if (isLoggedIn()) {
                 
                 <!-- Tin tức -->
                 <li class="nav-item">
-                    <a class="nav-link <?= $currentPage == 'news' ? 'active' : '' ?>" href="<?= BASE_URL ?>/news.php">
+                    <a class="nav-link <?= $currentPage == 'news' ? 'active' : '' ?>" href="<?= BASE_URL ?>/news/news.php">
                         <i class="fas fa-newspaper me-1"></i>TIN TỨC
                     </a>
                 </li>
@@ -245,17 +245,17 @@ if (isLoggedIn()) {
                         <i class="fas fa-user me-1"></i>HỒ SƠ
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/profile.php">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/users/profile.php">
                             <i class="fas fa-id-card me-2"></i>Dashboard cá nhân
                         </a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/my_donations.php">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/users/my_donations.php">
                             <i class="fas fa-heart text-danger me-2"></i>Lịch sử quyên góp
                         </a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/my_volunteers.php">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/users/my_volunteers.php">
                             <i class="fas fa-hands-helping text-success me-2"></i>Sự kiện tình nguyện
                         </a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/settings.php">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/users/settings.php">
                             <i class="fas fa-cog me-2"></i>Cài đặt tài khoản
                         </a></li>
                     </ul>
@@ -268,7 +268,6 @@ if (isLoggedIn()) {
                         <i class="fas fa-phone me-1"></i>LIÊN HỆ
                     </a>
                 </li>
-                
                 <!-- Admin (Admin only) -->
                 <?php if (isAdmin()): ?>
                 <li class="nav-item dropdown">
@@ -297,11 +296,12 @@ if (isLoggedIn()) {
                 </li>
                 <?php endif; ?>
             </ul>
+            <?php include __DIR__ . '/notification_widget.php'; ?>
             
             <!-- Quick Donate Button -->
             <?php if (isLoggedIn() && (isBenefactorVerified() || isAdmin())): ?>
             <a href="<?= BASE_URL ?>/benefactor/create_event.php" class="btn btn-danger">
-                <i class="fas fa-plus me-2"></i>Tạo sự kiện
+                <i class="fas fa-plus me-2"></i>Tạo tin tức
             </a>
             <?php endif; ?>
         </div>
@@ -347,7 +347,7 @@ if (!empty($runningNews)):
             <div class="ticker-content flex-grow-1">
                 <marquee behavior="scroll" direction="left" scrollamount="5">
                     <?php foreach ($runningNews as $news): ?>
-                        <a href="<?= BASE_URL ?>/news_detail.php?slug=<?= $news['slug'] ?>" 
+                        <a href="<?= BASE_URL ?>/news/news_detail.php?slug=<?= $news['slug'] ?>" 
                            class="text-decoration-none text-dark me-5">
                             <i class="fas fa-circle text-danger me-2" style="font-size: 0.5rem;"></i>
                             <?= sanitize($news['title']) ?>

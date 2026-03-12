@@ -8,6 +8,9 @@ $pageDescription = $pageDescription ?? 'Kết nối những tấm lòng nhân á
 ?>
 <!DOCTYPE html>
 <html lang="vi">
+      <!-- Swiper CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +31,8 @@ $pageDescription = $pageDescription ?? 'Kết nối những tấm lòng nhân á
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/style.css">    
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/style.css">   
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/news-pages.css"> 
     <!-- Additional CSS for specific pages -->
     <?php if (isset($additionalCSS)): ?>
         <?= $additionalCSS ?>

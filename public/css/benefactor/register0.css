@@ -1,0 +1,138 @@
+/* RESET */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* BODY – TÔNG ĐỎ NHẸ */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #FFF5F5;
+    color: #2c2c2c;
+}
+
+/* TRANG ĐĂNG KÝ */
+.register-page {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+/* TIÊU ĐỀ */
+.register-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 45px;
+    color: #C62828;
+}
+
+/* CONTAINER */
+.register-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+/* CARD CHUNG */
+.register-card {
+    text-decoration: none;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 18px 40px rgba(229, 57, 53, 0.18);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.register-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 28px 60px rgba(198, 40, 40, 0.28);
+}
+
+/* =====================
+   NỀN RIÊNG TỪNG KHỐI
+===================== */
+
+/* TỔ CHỨC – ĐỎ NHẠT, UY TÍN */
+.register-card.organization {
+    background: linear-gradient(
+        180deg,
+        #FFE5E5,
+        #FFFFFF
+    );
+}
+
+/* CÁ NHÂN – TRẮNG SẠCH */
+.register-card.personal {
+    background: linear-gradient(
+        180deg,
+        #FFFFFF,
+        #F9F9F9
+    );
+}
+
+/* KHUNG TRONG */
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* ẢNH FULL */
+.register-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* OVERLAY RẤT NHẸ – ĐỎ */
+.register-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(198, 40, 40, 0.30),
+        rgba(198, 40, 40, 0.08),
+        rgba(198, 40, 40, 0)
+    );
+    z-index: 1;
+}
+
+/* =====================
+   NÚT ĐĂNG KÝ
+===================== */
+.register-btn {
+    position: absolute;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 14px 34px;
+    background: linear-gradient(135deg, #E53935, #C62828);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(229, 57, 53, 0.45);
+    white-space: nowrap;
+    z-index: 2;
+}
+
+/* NÚT CÁ NHÂN – CAM TIỀN */
+.register-btn.light {
+    background: linear-gradient(135deg, #FF9800, #FFB74D);
+    box-shadow: 0 12px 28px rgba(255, 152, 0, 0.45);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .register-container {
+        grid-template-columns: 1fr;
+    }
+
+    .register-title {
+        font-size: 22px;
+    }
+}

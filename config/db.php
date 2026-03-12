@@ -1,4 +1,4 @@
-<?php
+<?php //config/db.php
 // Database Configuration
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'charity_event');
@@ -6,7 +6,7 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 
 // Base URL Configuration
-define('BASE_URL', '/DACS-CharityManager');
+define('BASE_URL', 'http://localhost/DACS-CharityManager');
 define('SITE_NAME', 'Charity Event');
 define('SITE_TAGLINE', 'Nền tảng kết nối từ thiện minh bạch');
 // CSRF Security
@@ -457,4 +457,160 @@ function paginate($query, $page = 1, $perPage = ITEMS_PER_PAGE) {
     ];
 }
 
+function notifyBenefactorApproved($userId) {
+    return createNotification(
+        $userId,
+        'admin',
+        'Đơn đăng ký nhà hảo tâm được duyệt',
+        'Chúc mừng! Đơn đăng ký nhà hảo tâm của bạn đã được phê duyệt. Bạn có thể bắt đầu tạo sự kiện từ thiện ngay bây giờ.',
+        BASE_URL . '/benefactor/dashboard.php'
+    );
+}
+
+/**
+ * Send notification when benefactor application is rejected
+ */
+function notifyBenefactorRejected($userId, $reason) {
+    return createNotification(
+        $userId,
+        'admin',
+        'Đơn đăng ký nhà hảo tâm chưa được duyệt',
+        'Rất tiếc, đơn đăng ký của bạn chưa được phê duyệt. Lý do: ' . $reason,
+        BASE_URL . '/benefactor/apply.php'
+    );
+}
+
+/**
+ * Send notification when event is approved (FOR BENEFACTOR - để bạn khác dùng)
+ */
+function notifyEventApproved($benefactorId, $eventId, $eventTitle) {
+    return createNotification(
+        $benefactorId,
+        'admin',
+        'Sự kiện được duyệt',
+        'Sự kiện "' . $eventTitle . '" của bạn đã được phê duyệt và hiển thị công khai.',
+        BASE_URL . '/benefactor/events/detail.php?id=' . $eventId
+    );
+}
+
+/**
+ * Send notification when event is rejected (FOR BENEFACTOR - để bạn khác dùng)
+ */
+function notifyEventRejected($benefactorId, $eventId, $eventTitle, $reason) {
+    return createNotification(
+        $benefactorId,
+        'admin',
+        'Sự kiện chưa được duyệt',
+        'Sự kiện "' . $eventTitle . '" chưa được phê duyệt. Lý do: ' . $reason,
+        BASE_URL . '/benefactor/events/edit.php?id=' . $eventId
+    );
+}
+
+/**
+ * Send notification to benefactor when someone donates (FOR BENEFACTOR - để bạn khác dùng)
+ */
+function notifyNewDonation($benefactorId, $eventId, $eventTitle, $amount, $donorName) {
+    return createNotification(
+        $benefactorId,
+        'donation',
+        'Quyên góp mới',
+        $donorName . ' đã quyên góp ' . formatMoney($amount) . ' cho sự kiện "' . $eventTitle . '"',
+        BASE_URL . '/benefactor/donations/list.php?event_id=' . $eventId
+    );
+}
+
+/**
+ * Send notification to user when donation is confirmed
+ */
+function notifyDonationConfirmed($userId, $eventId, $eventTitle, $amount) {
+    return createNotification(
+        $userId,
+        'donation',
+        'Quyên góp đã được xác nhận',
+        'Quyên góp ' . formatMoney($amount) . ' của bạn cho sự kiện "' . $eventTitle . '" đã được xác nhận. Cảm ơn bạn!',
+        BASE_URL . '/user/my_donations.php'
+    );
+}
+
+/**
+ * Send notification to benefactor when someone volunteers (FOR BENEFACTOR - để bạn khác dùng)
+ */
+function notifyNewVolunteer($benefactorId, $eventId, $eventTitle, $volunteerName) {
+    return createNotification(
+        $benefactorId,
+        'volunteer',
+        'Đăng ký tình nguyện viên mới',
+        $volunteerName . ' đã đăng ký làm tình nguyện viên cho sự kiện "' . $eventTitle . '"',
+        BASE_URL . '/benefactor/volunteers/list.php?event_id=' . $eventId
+    );
+}
+
+/**
+ * Send notification to user when volunteer application is approved
+ */
+function notifyVolunteerApproved($userId, $eventId, $eventTitle) {
+    return createNotification(
+        $userId,
+        'volunteer',
+        'Đăng ký tình nguyện được duyệt',
+        'Đăng ký tình nguyện viên của bạn cho sự kiện "' . $eventTitle . '" đã được chấp nhận!',
+        BASE_URL . '/user/my_volunteers.php'
+    );
+}
+
+/**
+ * Send notification to user when volunteer application is rejected
+ */
+function notifyVolunteerRejected($userId, $eventId, $eventTitle, $reason) {
+    return createNotification(
+        $userId,
+        'volunteer',
+        'Đăng ký tình nguyện chưa được duyệt',
+        'Rất tiếc, đăng ký tình nguyện viên của bạn cho sự kiện "' . $eventTitle . '" chưa được chấp nhận. Lý do: ' . $reason,
+        BASE_URL . '/user/my_volunteers.php'
+    );
+}
+
+/**
+ * Send notification to admins (broadcast)
+ */
+function notifyAdmins($title, $message, $link = null) {
+    global $pdo;
+    $adminIds = $pdo->query("SELECT id FROM users WHERE role = 'admin'")->fetchAll(PDO::FETCH_COLUMN);
+    
+    foreach ($adminIds as $adminId) {
+        createNotification($adminId, 'admin', $title, $message, $link);
+    }
+    
+    return true;
+}
+
+/**
+ * Get unread notification count for user
+ */
+function getUnreadNotificationCount($userId) {
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM notifications WHERE user_id = ? AND is_read = 0");
+    $stmt->execute([$userId]);
+    return (int)$stmt->fetchColumn();
+}
+
+/**
+ * Mark notification as read
+ */
+function markNotificationAsRead($notificationId, $userId) {
+    global $pdo;
+    $stmt = $pdo->prepare("UPDATE notifications SET is_read = 1 WHERE id = ? AND user_id = ?");
+    return $stmt->execute([$notificationId, $userId]);
+}
+
+/**
+ * Mark all notifications as read for user
+ */
+function markAllNotificationsAsRead($userId) {
+    global $pdo;
+    $stmt = $pdo->prepare("UPDATE notifications SET is_read = 1 WHERE user_id = ?");
+    return $stmt->execute([$userId]);
+}
 ?>
+

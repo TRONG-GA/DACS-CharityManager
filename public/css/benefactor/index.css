@@ -1,0 +1,82 @@
+/* Custom CSS cho trang chủ Benefactor */
+
+/* Hero Section: Tăng độ cao và đảm bảo chữ luôn nổi bật */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('/DACS-CHARITYMANAGER/public/uploads/documents/banner.png'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Tạo hiệu ứng Parallax nhẹ */
+    color: #fff !important; /* Đảm bảo chữ luôn trắng */
+    padding: 150px 0;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Stats Section: Đè lên Hero để tạo chiều sâu như hình mẫu */
+.stats {
+    position: relative;
+    z-index: 10;
+    margin-top: -60px; /* Đẩy khối thống kê lên trên Hero */
+}
+
+.stats .container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+/* Campaign Cards: Tinh chỉnh hiển thị thẻ chiến dịch */
+.campaigns {
+    padding: 80px 0;
+    background-color: #f8f9fa;
+}
+
+.card {
+    border: none !important;
+    border-radius: 16px !important;
+    overflow: hidden;
+    transition: all 0.3s ease-user;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.card-img-top {
+    height: 220px;
+    object-fit: cover; /* Giúp ảnh không bị méo */
+}
+
+/* Progress Bar: Tùy chỉnh thanh tiến trình */
+.progress {
+    height: 10px !important;
+    background-color: #e9ecef !important;
+    border-radius: 10px !important;
+    margin: 15px 0;
+}
+
+.progress-bar {
+    background-color: #2ecc71 !important; /* Màu xanh lá đặc trưng */
+    border-radius: 10px !important;
+}
+
+.btn-primary {
+    background-color: #2ecc71 !important;
+    border-color: #2ecc71 !important;
+    font-weight: 600;
+}
+
+.btn-outline-light:hover {
+    color: #2ecc71 !important;
+}

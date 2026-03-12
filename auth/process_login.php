@@ -156,7 +156,7 @@ try {
         if ($user['role'] === 'admin') {
             header('Location: ' . BASE_URL . '/admin/dashboard.php');
         } elseif ($user['role'] === 'benefactor') {
-            header('Location: ' . BASE_URL . '/benefactor/my_events.php');
+            header('Location: ' . BASE_URL . '/benefactor/index.php');
         } else {
             header('Location: ' . BASE_URL . '/index.php');
         }

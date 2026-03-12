@@ -1,0 +1,145 @@
+2026-02-27 10:00:54 - POST DATA: Array
+(
+    [csrf_token] => 35c110772fbcac0c5dc19bf9eba70abe17b35a4e00c2b7ab8efbec7ddfbfe70b
+    [event_id] => 1
+    [fullname] => trong
+    [email] => test1@gmail.com
+    [phone] => 0974972206
+    [gender] => male
+    [birth_date] => 2005-06-19
+    [occupation] => Sinh viên
+    [skills] => ["Y tế cơ bản"]
+    [experience] => no
+    [motivation] => no
+    [available_weekend] => on
+    [agree_terms] => on
+)
+
+
+2026-02-27 10:01:36 - POST DATA: Array
+(
+    [csrf_token] => 35c110772fbcac0c5dc19bf9eba70abe17b35a4e00c2b7ab8efbec7ddfbfe70b
+    [event_id] => 1
+    [fullname] => trong
+    [email] => test1@gmail.com
+    [phone] => 0974972206
+    [gender] => male
+    [birth_date] => 2005-06-19
+    [occupation] => Sinh viên
+    [skills] => ["Y tế cơ bản"]
+    [experience] => no
+    [motivation] => no
+    [available_weekend] => on
+    [agree_terms] => on
+)
+
+
+2026-02-27 10:03:15 - POST DATA: Array
+(
+    [csrf_token] => 35c110772fbcac0c5dc19bf9eba70abe17b35a4e00c2b7ab8efbec7ddfbfe70b
+    [event_id] => 1
+    [fullname] => trong
+    [email] => tronglen10123456@gmail.com
+    [phone] => 0974972206
+    [gender] => male
+    [birth_date] => 2005-06-19
+    [occupation] => Sinh viên
+    [skills] => ["Y tế cơ bản"]
+    [experience] => no
+    [motivation] => no
+    [available_weekday] => on
+    [available_weekend] => on
+    [agree_terms] => on
+)
+
+
+2026-02-27 10:05:29 - POST DATA: Array
+(
+    [csrf_token] => 35c110772fbcac0c5dc19bf9eba70abe17b35a4e00c2b7ab8efbec7ddfbfe70b
+    [event_id] => 4
+    [fullname] => trong
+    [email] => tronglen10123456@gmail.com
+    [phone] => 0987846512
+    [gender] => male
+    [birth_date] => 2005-06-19
+    [occupation] => Sinh viên
+    [skills] => ["Nấu ăn","Y tế cơ bản","Sơ cấp cứu"]
+    [experience] => có
+    [motivation] => có
+    [available_evening] => on
+    [agree_terms] => on
+)
+
+
+2026-02-27 10:09:33 - POST DATA: Array
+(
+    [csrf_token] => 35c110772fbcac0c5dc19bf9eba70abe17b35a4e00c2b7ab8efbec7ddfbfe70b
+    [event_id] => 4
+    [fullname] => trong
+    [email] => tronglen10123456@gmail.com
+    [phone] => 0987846512
+    [gender] => male
+    [birth_date] => 2005-06-19
+    [occupation] => Sinh viên
+    [skills] => ["Lái xe","Chăm sóc người già"]
+    [experience] => no
+    [motivation] => no
+    [available_evening] => on
+    [agree_terms] => on
+)
+
+
+2026-02-27 10:10:19 - POST DATA: Array
+(
+    [csrf_token] => 35c110772fbcac0c5dc19bf9eba70abe17b35a4e00c2b7ab8efbec7ddfbfe70b
+    [event_id] => 4
+    [fullname] => trong
+    [email] => tronglen10123456@gmail.com
+    [phone] => 0987846512
+    [gender] => male
+    [birth_date] => 2005-06-19
+    [occupation] => Sinh viên
+    [skills] => ["Lái xe","Chăm sóc người già"]
+    [experience] => no
+    [motivation] => no
+    [available_evening] => on
+    [agree_terms] => on
+)
+
+
+2026-02-28 13:52:37 - POST DATA: Array
+(
+    [csrf_token] => a45e4ca9f51aa19094b6d7ba2893cb1165cb84957820452a4b064dc65c58dd74
+    [event_id] => 1
+    [fullname] => users
+    [email] => test1@gmail.com
+    [phone] => 0952122222
+    [gender] => male
+    [birth_date] => 2005-06-19
+    [occupation] => Sinh viên
+    [skills] => ["Chăm sóc trẻ em"]
+    [experience] => cos
+    [motivation] => no
+    [available_evening] => on
+    [agree_terms] => on
+)
+
+
+2026-02-28 13:53:18 - POST DATA: Array
+(
+    [csrf_token] => a45e4ca9f51aa19094b6d7ba2893cb1165cb84957820452a4b064dc65c58dd74
+    [event_id] => 1
+    [fullname] => users
+    [email] => test1@gmail.com
+    [phone] => 0952122222
+    [gender] => male
+    [birth_date] => 2005-06-19
+    [occupation] => Sinh viên
+    [skills] => ["Chăm sóc trẻ em"]
+    [experience] => cos
+    [motivation] => no
+    [available_evening] => on
+    [agree_terms] => on
+)
+
+
