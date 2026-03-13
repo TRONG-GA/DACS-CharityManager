@@ -230,18 +230,23 @@ $pageTitle = 'Dashboard Quản lý Sự kiện';
  
 <div class="dashboard-wrapper">
     <aside class="sidebar">
-        <a href="../index.php" style="text-decoration: none;">
-            <div class="sidebar-logo">Charity Events</div>
-        </a>
-        <ul class="sidebar-menu">
-            <li class="active"><a href="dashboard.php">📊 Tổng quan</a></li>
-            <li><a href="create_campaign.php">+ Tạo sự kiện mới</a></li>
-            <li><a href="manage_news.php">📝 Đăng tin tức</a></li>
-            <li><a href="tinhnguyen.php">👥 Quản lý tình nguyện viên</a></li>
-            <li><a href="settings.php">⚙️ Cài đặt tài khoản</a></li>
-            <li><a href="../auth/logout.php">🚪 Đăng xuất</a></li>
-        </ul>
-    </aside>
+    <a href="../index.php" style="text-decoration: none;">
+        <div class="sidebar-logo">Charity Events</div>
+    </a>
+    <ul class="sidebar-menu">
+        <li class="active"><a href="dashboard.php">📊 Tổng quan</a></li>
+        <li><a href="create_campaign.php">+ Tạo sự kiện mới</a></li>
+        <li><a href="manage_news.php">📝 Đăng tin tức</a></li>
+        <li><a href="tinhnguyen.php">👥 Quản lý tình nguyện viên</a></li>
+        <li><a href="settings.php">⚙️ Cài đặt tài khoản</a></li>
+        <li><a href="../auth/logout.php">🚪 Đăng xuất</a></li>
+         <li style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+            <a href="../index.php" style="background: rgba(255,255,255,0.1); border-radius: 6px;">
+                <i class="fas fa-home"></i>  Về trang chủ
+            </a>
+        </li>
+    </ul>
+</aside>
  
     <main class="main-content">
         <?php if ($flash = getFlashMessage()): ?>

@@ -302,12 +302,20 @@ if (isLoggedIn()) {
             </ul>
             <?php include __DIR__ . '/notification_widget.php'; ?>
             
-            <!-- Quick Donate Button -->
-            <?php if (isLoggedIn() && (isBenefactorVerified() || isAdmin())): ?>
-            <a href="<?= BASE_URL ?>/admin/news/create_news.php" class="btn btn-danger">
-                <i class="fas fa-plus me-2"></i>Tạo tin tức
-            </a>
-            <?php endif; ?>
+<!-- Quick Action Button -->
+<?php if (isLoggedIn()): ?>
+    <?php if (isAdmin()): ?>
+        <!-- Nút Tạo tin tức cho Admin -->
+        <a href="<?= BASE_URL ?>/admin/news/create_news.php" class="btn btn-danger">
+            <i class="fas fa-plus me-2"></i>Tạo tin tức
+        </a>
+    <?php elseif (isBenefactorVerified()): ?>
+        <!-- Nút Dashboard cho Benefactor -->
+        <a href="<?= BASE_URL ?>/benefactor/dashboard.php" class="btn btn-danger">
+            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+        </a>
+    <?php endif; ?>
+<?php endif; ?>
         </div>
     </div>
 </nav>
