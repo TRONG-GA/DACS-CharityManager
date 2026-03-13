@@ -440,7 +440,13 @@ include '../includes/navbar.php';
                         <div class="col-md-6 col-lg-4">
                             <div class="event-card">
                                 <div class="position-relative">
-                                    <img src="<?= BASE_URL ?>/public/uploads/events/<?= $event['thumbnail'] ?>" 
+                                    <?php
+$thumb = $event['thumbnail'];
+if (strpos($thumb, 'events/') !== 0) {
+    $thumb = 'events/' . $thumb;
+}
+?>
+<img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>"
                                          alt="<?= sanitize($event['title']) ?>"
                                          onerror="this.src='<?= BASE_URL ?>/public/images/placeholder.php'">
                                     

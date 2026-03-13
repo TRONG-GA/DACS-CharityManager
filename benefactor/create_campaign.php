@@ -57,23 +57,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $error = "Vui lòng tải lên ảnh bìa cho chiến dịch.";
     } else {
         try {
+            // TẠO SLUG (QUAN TRỌNG!)
+            $slug = generateSlug($target_name);
+            
+            // Lấy số lượng tình nguyện viên (nếu có)
+            $volunteer_needed = 0;
+            if (isset($_POST['need_volunteers']) && $_POST['need_volunteers'] === 'yes') {
+                $volunteer_needed = intval($_POST['volunteer_count'] ?? 0);
+            }
+            
             // INSERT VÀO EVENTS TABLE (LOGIC MỚI!)
             $sql = "INSERT INTO events 
-                    (user_id, title, description, category, target_amount, 
-                     start_date, end_date, location, thumbnail, status) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
+                    (user_id, title, slug, description, category, target_amount, 
+                     start_date, end_date, location, thumbnail, volunteer_needed, status) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
             
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 $user_id,
                 $target_name,
+                $slug,
                 $story,
                 $category,
                 $target_amount,
                 $start_date,
                 $end_date,
                 $campaign_location,
-                $campaign_image
+                $campaign_image,
+                $volunteer_needed
             ]);
  
             $eventId = $pdo->lastInsertId();
@@ -195,6 +206,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     </div>
                 </div>
  
+                <!-- TUYỂN TÌNH NGUYỆN VIÊN -->
+                <div class="form-group" style="border: 2px solid #e0e0e0; padding: 20px; border-radius: 8px; background: #f9f9f9;">
+                    <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
+                        <input type="checkbox" id="volunteerCheckbox" name="need_volunteers" value="yes" style="width: auto; margin-right: 10px; transform: scale(1.3);">
+                        <span style="font-size: 16px; font-weight: bold;">🙋 Kết nối thêm tình nguyện viên?</span>
+                    </label>
+                    <p style="font-size: 13px; color: #666; margin: 10px 0 15px 30px;">Tích vào nếu chiến dịch cần sự hỗ trợ từ tình nguyện viên</p>
+                    
+                    <div id="volunteerCountBox" style="margin-left: 30px; opacity: 0.4; pointer-events: none; transition: all 0.3s;">
+                        <label style="font-weight: 600; margin-bottom: 8px; display: block;">Số lượng tình nguyện viên cần tuyển</label>
+                        <input type="number" id="volunteerCountInput" name="volunteer_count" class="form-control" placeholder="Vd: 10" min="0" value="0" style="max-width: 250px;">
+                    </div>
+                </div>
+ 
                 <div class="form-group">
                     <label>Ảnh bìa đại diện cho chiến dịch <span style="color:red">*</span></label>
                     <p style="font-size: 13px; color: #666; margin-top: -5px;">Nên chọn ảnh ngang, chất lượng cao, thể hiện rõ nhất nội dung kêu gọi.</p>
@@ -241,6 +266,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             imagePreview.src = src;
             imagePreview.style.display = "block";
             uploadText.style.display = "none";
+        }
+    });
+ 
+    // Xử lý checkbox tình nguyện viên
+    const volunteerCheckbox = document.getElementById('volunteerCheckbox');
+    const volunteerCountBox = document.getElementById('volunteerCountBox');
+    const volunteerCountInput = document.getElementById('volunteerCountInput');
+ 
+    volunteerCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            volunteerCountBox.style.opacity = '1';
+            volunteerCountBox.style.pointerEvents = 'auto';
+            volunteerCountInput.required = true;
+            volunteerCountInput.min = '1';
+        } else {
+            volunteerCountBox.style.opacity = '0.4';
+            volunteerCountBox.style.pointerEvents = 'none';
+            volunteerCountInput.required = false;
+            volunteerCountInput.min = '0';
+            volunteerCountInput.value = '0';
         }
     });
 </script>

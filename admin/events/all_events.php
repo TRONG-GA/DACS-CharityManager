@@ -226,7 +226,13 @@ $stats = [
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <?php if ($event['thumbnail']): ?>
-                                                    <img src="<?= BASE_URL ?>/public/uploads/events/<?= $event['thumbnail'] ?>" 
+                                                    <?php
+$thumb = $event['thumbnail'];
+if (strpos($thumb, 'events/') !== 0) {
+    $thumb = 'events/' . $thumb;
+}
+?>
+<img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>"
                                                          alt="Thumbnail" class="me-2" 
                                                          style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;">
                                                     <?php endif; ?>

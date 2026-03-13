@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 require_once __DIR__ . '/../config/db.php';
-
+// benefactor manage_news.php
 // PHÂN QUYỀN
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'benefactor') {
     header("Location: ../index.php");

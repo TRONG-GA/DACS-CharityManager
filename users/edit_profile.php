@@ -163,7 +163,13 @@ include '../includes/navbar.php';
                         <div class="mb-4 text-center">
                             <div class="mb-3">
                                 <?php if (!empty($user['avatar'])): ?>
-                                <img src="<?= BASE_URL ?>/public/uploads/avatars/<?= $user['avatar'] ?>" 
+                                <?php
+$thumb = $user['avatar'];
+if (strpos($thumb, 'avatars/') !== 0) {
+    $thumb = 'avatars/' . $thumb;
+}
+?>
+<img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>"
                                      class="rounded-circle" 
                                      id="avatar-preview"
                                      width="150" height="150"

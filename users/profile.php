@@ -110,7 +110,14 @@ include '../includes/navbar.php';
                 <div class="card-body text-center">
                     <div class="mb-3">
                         <?php if ($user['avatar']): ?>
-                        <img src="<?= BASE_URL ?>/public/uploads/avatars/<?= $user['avatar'] ?>" 
+                        <?php
+
+$thumb = $user['avatar'];
+if (strpos($thumb, 'avatars/') !== 0) {
+    $thumb = 'avatars/' . $thumb;
+}
+?>
+<img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>"
                              class="rounded-circle" 
                              width="120" height="120"
                              style="object-fit: cover;">
@@ -233,7 +240,13 @@ include '../includes/navbar.php';
                 <div class="card-body">
                     <?php foreach ($upcoming as $event): ?>
                     <div class="d-flex mb-3 pb-3 border-bottom">
-                        <img src="<?= BASE_URL ?>/public/uploads/events/<?= $event['thumbnail'] ?>" 
+                        <?php
+                        $thumb = $event['thumbnail'];
+                        if (strpos($thumb, 'events/') !== 0) {
+                            $thumb = 'events/' . $thumb;
+                        }
+                        ?>
+                        <img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>" 
                              class="rounded me-3"
                              style="width: 80px; height: 80px; object-fit: cover;">
                         <div class="flex-grow-1">
@@ -271,7 +284,13 @@ include '../includes/navbar.php';
                             <?php if (!empty($donations)): ?>
                                 <?php foreach ($donations as $donation): ?>
                                 <div class="d-flex mb-3 pb-3 border-bottom">
-                                    <img src="<?= BASE_URL ?>/public/uploads/events/<?= $donation['thumbnail'] ?>" 
+                                    <?php
+                                    $thumb = $donation['thumbnail'];
+                                    if (strpos($thumb, 'events/') !== 0) {
+                                        $thumb = 'events/' . $thumb;
+                                    }
+                                    ?>
+                                    <img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>" 
                                          class="rounded me-3"
                                          style="width: 60px; height: 60px; object-fit: cover;">
                                     <div class="flex-grow-1">
@@ -302,7 +321,13 @@ include '../includes/navbar.php';
                             <?php if (!empty($volunteers)): ?>
                                 <?php foreach ($volunteers as $vol): ?>
                                 <div class="d-flex mb-3 pb-3 border-bottom">
-                                    <img src="<?= BASE_URL ?>/public/uploads/events/<?= $vol['thumbnail'] ?>" 
+                                    <?php
+                                    $thumb = $vol['thumbnail'];
+                                    if (strpos($thumb, 'events/') !== 0) {
+                                        $thumb = 'events/' . $thumb;
+                                    }
+                                    ?>
+                                    <img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>" 
                                          class="rounded me-3"
                                          style="width: 60px; height: 60px; object-fit: cover;">
                                     <div class="flex-grow-1">

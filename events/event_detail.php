@@ -111,9 +111,15 @@ include '../includes/navbar.php';
                 
                 <!-- Hero Image -->
                 <div class="event-hero">
-                    <img src="<?= BASE_URL ?>/public/uploads/events/<?= $event['thumbnail'] ?>" 
+                    <?php
+$thumb = $event['thumbnail'];
+if (strpos($thumb, 'events/') !== 0) {
+    $thumb = 'events/' . $thumb;
+}
+?>
+<img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>"
                          alt="<?= sanitize($event['title']) ?>"
-                         onerror="this.src='<?= BASE_URL ?>/public/images/placeholder.php'">
+                         onerror="this.src='<?= BASE_URL ?>/public/images/placeholder.jpg'">
                 </div>
                 
                 <!-- Event Info -->

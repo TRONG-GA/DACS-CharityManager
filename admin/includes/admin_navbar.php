@@ -78,7 +78,7 @@
                         <?= htmlspecialchars($_SESSION['fullname']) ?>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/user/profile.php">
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/users/profile.php">
                             <i class="bi bi-person"></i> Hồ sơ
                         </a></li>
                         <li><a class="dropdown-item" href="<?= BASE_URL ?>/admin/settings/general.php">

@@ -21,42 +21,52 @@ if (!$user) {
     exit;
 }
 
-// Get statistics
-$donationStats = $pdo->prepare("
+// Get donation statistics - SỬA LỖI
+$stmt = $pdo->prepare("
     SELECT COUNT(*) as count, COALESCE(SUM(amount), 0) as total
     FROM donations WHERE user_id = ? AND status = 'completed'
-")->execute([$userId])->fetch() ?: ['count' => 0, 'total' => 0];
+");
+$stmt->execute([$userId]);
+$donationStats = $stmt->fetch() ?: ['count' => 0, 'total' => 0];
 
-$volunteerCount = $pdo->query("
-    SELECT COUNT(*) FROM event_volunteers WHERE user_id = $userId
-")->fetchColumn();
+// Get volunteer count
+$volunteerCount = $pdo->prepare("
+    SELECT COUNT(*) FROM event_volunteers WHERE user_id = ?
+");
+$volunteerCount->execute([$userId]);
+$volunteerCount = $volunteerCount->fetchColumn() ?: 0;
 
+// Get events created (for benefactors)
 $eventsCreated = 0;
 if ($user['role'] === 'benefactor') {
-    $eventsCreated = $pdo->query("
-        SELECT COUNT(*) FROM events WHERE user_id = $userId
-    ")->fetchColumn();
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM events WHERE user_id = ?");
+    $stmt->execute([$userId]);
+    $eventsCreated = $stmt->fetchColumn() ?: 0;
 }
 
-// Get recent donations
-$recentDonations = $pdo->prepare("
+// Get recent donations - SỬA LỖI
+$stmt = $pdo->prepare("
     SELECT d.*, e.title as event_title
     FROM donations d
     JOIN events e ON d.event_id = e.id
     WHERE d.user_id = ?
     ORDER BY d.created_at DESC
     LIMIT 10
-")->execute([$userId])->fetchAll();
+");
+$stmt->execute([$userId]);
+$recentDonations = $stmt->fetchAll() ?: [];
 
-// Get volunteer activities
-$volunteerActivities = $pdo->prepare("
+// Get volunteer activities - SỬA LỖI
+$stmt = $pdo->prepare("
     SELECT ev.*, e.title as event_title
     FROM event_volunteers ev
     JOIN events e ON ev.event_id = e.id
     WHERE ev.user_id = ?
     ORDER BY ev.created_at DESC
     LIMIT 10
-")->execute([$userId])->fetchAll();
+");
+$stmt->execute([$userId]);
+$volunteerActivities = $stmt->fetchAll() ?: [];
 
 $pageTitle = 'Chi tiết người dùng';
 ?>
@@ -116,12 +126,21 @@ $pageTitle = 'Chi tiết người dùng';
                     <div class="col-lg-4 mb-4">
                         <div class="card">
                             <div class="card-body text-center">
-                                <img src="<?= BASE_URL ?>/public/uploads/avatars/<?= $user['avatar'] ?>" 
-                                     alt="Avatar" class="rounded-circle mb-3" 
-                                     style="width: 120px; height: 120px; object-fit: cover;"
-                                     onerror="this.src='<?= BASE_URL ?>/public/uploads/avatars/default-avatar.png'">
-                                <h4><?= htmlspecialchars($user['fullname']) ?></h4>
-                                <p class="text-muted"><?= htmlspecialchars($user['email']) ?></p>
+                               <?php
+            // Xử lý đường dẫn avatar an toàn
+            $avatarPath = 'default-avatar.png';
+            if (!empty($user['avatar'])) {
+                $fullPath = $_SERVER['DOCUMENT_ROOT'] . '/DACS-CharityManager/public/uploads/avatars/' . $user['avatar'];
+                if (file_exists($fullPath)) {
+                    $avatarPath = $user['avatar'];
+                }
+            }
+            ?>
+            <img src="<?= BASE_URL ?>/public/uploads/avatars/<?= $avatarPath ?>" 
+                 alt="Avatar" class="rounded-circle mb-3" 
+                 style="width: 120px; height: 120px; object-fit: cover;">
+            <h4><?= htmlspecialchars($user['fullname']) ?></h4>
+            <p class="text-muted"><?= htmlspecialchars($user['email']) ?></p>
                                 
                                 <?php 
                                 $roleColors = [
@@ -135,8 +154,8 @@ $pageTitle = 'Chi tiết người dùng';
                                     'admin' => 'Admin'
                                 ];
                                 ?>
-                                <span class="badge bg-<?= $roleColors[$user['role']] ?> mb-3">
-                                    <?= $roleLabels[$user['role']] ?>
+                                <span class="badge bg-<?= $roleColors[$user['role']] ?? 'secondary' ?> mb-3">
+                                    <?= $roleLabels[$user['role']] ?? 'User' ?>
                                 </span>
                                 
                                 <?php 
@@ -151,8 +170,8 @@ $pageTitle = 'Chi tiết người dùng';
                                     'banned' => 'Đã khóa'
                                 ];
                                 ?>
-                                <span class="badge bg-<?= $statusColors[$user['status']] ?>">
-                                    <?= $statusLabels[$user['status']] ?>
+                                <span class="badge bg-<?= $statusColors[$user['status']] ?? 'secondary' ?>">
+                                    <?= $statusLabels[$user['status']] ?? 'Không xác định' ?>
                                 </span>
                             </div>
                             <div class="card-body border-top">
@@ -163,12 +182,12 @@ $pageTitle = 'Chi tiết người dùng';
                                 <div class="mb-2">
                                     <i class="bi bi-geo-alt text-muted"></i>
                                     <strong>Địa chỉ:</strong> 
-                                    <?php if ($user['address']): ?>
+                                    <?php if (!empty($user['address'])): ?>
                                         <?= htmlspecialchars($user['address']) ?>
-                                        <?php if ($user['district']): ?>
+                                        <?php if (!empty($user['district'])): ?>
                                         , <?= htmlspecialchars($user['district']) ?>
                                         <?php endif; ?>
-                                        <?php if ($user['city']): ?>
+                                        <?php if (!empty($user['city'])): ?>
                                         , <?= htmlspecialchars($user['city']) ?>
                                         <?php endif; ?>
                                     <?php else: ?>
@@ -179,7 +198,7 @@ $pageTitle = 'Chi tiết người dùng';
                                     <i class="bi bi-calendar text-muted"></i>
                                     <strong>Đăng ký:</strong> <?= formatDate($user['created_at'], 'd/m/Y H:i') ?>
                                 </div>
-                                <?php if ($user['last_login']): ?>
+                                <?php if (!empty($user['last_login'])): ?>
                                 <div class="mb-2">
                                     <i class="bi bi-clock text-muted"></i>
                                     <strong>Truy cập:</strong> <?= timeAgo($user['last_login']) ?>
@@ -197,8 +216,8 @@ $pageTitle = 'Chi tiết người dùng';
                                 <div class="card border-success">
                                     <div class="card-body">
                                         <h6 class="text-muted mb-1">Tổng quyên góp</h6>
-                                        <h4 class="text-success mb-0"><?= formatMoney($donationStats['total']) ?></h4>
-                                        <small class="text-muted"><?= $donationStats['count'] ?> lần</small>
+                                        <h4 class="text-success mb-0"><?= formatMoney($donationStats['total'] ?? 0) ?></h4>
+                                        <small class="text-muted"><?= $donationStats['count'] ?? 0 ?> lần</small>
                                     </div>
                                 </div>
                             </div>
@@ -229,7 +248,7 @@ $pageTitle = 'Chi tiết người dùng';
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="donations-tab" data-bs-toggle="tab" 
                                         data-bs-target="#donations" type="button">
-                                    <i class="bi bi-currency-dollar"></i> Quyên góp (<?= $donationStats['count'] ?>)
+                                    <i class="bi bi-currency-dollar"></i> Quyên góp (<?= $donationStats['count'] ?? 0 ?>)
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
@@ -260,8 +279,8 @@ $pageTitle = 'Chi tiết người dùng';
                                                 <tbody>
                                                     <?php foreach ($recentDonations as $donation): ?>
                                                     <tr>
-                                                        <td><?= htmlspecialchars($donation['event_title']) ?></td>
-                                                        <td><strong class="text-success"><?= formatMoney($donation['amount']) ?></strong></td>
+                                                        <td><?= htmlspecialchars($donation['event_title'] ?? 'N/A') ?></td>
+                                                        <td><strong class="text-success"><?= formatMoney($donation['amount'] ?? 0) ?></strong></td>
                                                         <td>
                                                             <?php
                                                             $colors = [
@@ -270,8 +289,8 @@ $pageTitle = 'Chi tiết người dùng';
                                                                 'failed' => 'danger'
                                                             ];
                                                             ?>
-                                                            <span class="badge bg-<?= $colors[$donation['status']] ?>">
-                                                                <?= ucfirst($donation['status']) ?>
+                                                            <span class="badge bg-<?= $colors[$donation['status']] ?? 'secondary' ?>">
+                                                                <?= ucfirst($donation['status'] ?? 'unknown') ?>
                                                             </span>
                                                         </td>
                                                         <td><small><?= formatDate($donation['created_at']) ?></small></td>
@@ -305,7 +324,7 @@ $pageTitle = 'Chi tiết người dùng';
                                                 <tbody>
                                                     <?php foreach ($volunteerActivities as $vol): ?>
                                                     <tr>
-                                                        <td><?= htmlspecialchars($vol['event_title']) ?></td>
+                                                        <td><?= htmlspecialchars($vol['event_title'] ?? 'N/A') ?></td>
                                                         <td><?= htmlspecialchars($vol['skills'] ?? 'Chung') ?></td>
                                                         <td>
                                                             <?php
@@ -316,8 +335,8 @@ $pageTitle = 'Chi tiết người dùng';
                                                                 'attended' => 'info'
                                                             ];
                                                             ?>
-                                                            <span class="badge bg-<?= $colors[$vol['status']] ?>">
-                                                                <?= ucfirst($vol['status']) ?>
+                                                            <span class="badge bg-<?= $colors[$vol['status']] ?? 'secondary' ?>">
+                                                                <?= ucfirst($vol['status'] ?? 'unknown') ?>
                                                             </span>
                                                         </td>
                                                         <td><small><?= formatDate($vol['created_at']) ?></small></td>

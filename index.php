@@ -254,7 +254,13 @@ include 'includes/navbar.php';
             <div class="col-lg-4 col-md-6">
                 <div class="card event-card h-100">
                     <div class="position-relative">
-                        <img src="<?= BASE_URL ?>/public/uploads/events/<?= $event['thumbnail'] ?>" 
+                        <?php
+$thumb = $event['thumbnail'];
+if (strpos($thumb, 'events/') !== 0) {
+    $thumb = 'events/' . $thumb;
+}
+?>
+<img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>"
                              class="card-img-top"
                              style="height: 200px; object-fit: cover;"
                              alt="<?= sanitize($event['title']) ?>"
@@ -358,7 +364,13 @@ include 'includes/navbar.php';
                             <div class="card h-100">
                                 <div class="row g-0">
                                     <div class="col-5">
-                                        <img src="<?= BASE_URL ?>/public/uploads/events/<?= $event['thumbnail'] ?>" 
+                                        <?php
+$thumb = $event['thumbnail'];
+if (strpos($thumb, 'events/') !== 0) {
+    $thumb = 'events/' . $thumb;
+}
+?>
+<img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>"
                                              class="img-fluid h-100" 
                                              style="object-fit: cover;"
                                              alt="<?= sanitize($event['title']) ?>">
@@ -406,7 +418,13 @@ include 'includes/navbar.php';
                         <?php foreach ($latestNewsArticles as $news): ?>
                         <div class="col-md-6">
                             <div class="card h-100 border-0 shadow-sm">
-                                <img src="<?= BASE_URL ?>/public/uploads/news/<?= $news['thumbnail'] ?>" 
+                                <?php
+                                $thumb = $news['thumbnail'];
+                                if (strpos($thumb, 'news/') !== 0) {
+                                    $thumb = 'news/' . $thumb;
+                                }
+                                ?>
+                                <img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>" 
                                      class="card-img-top" 
                                      alt="<?= sanitize($news['title']) ?>"
                                      style="height: 200px; object-fit: cover;">

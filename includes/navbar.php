@@ -114,6 +114,7 @@ if (isLoggedIn()) {
 </header>
 
 <!-- Navigation Bar (Sticky) -->
+<!-- Navigation Bar (Sticky) -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top shadow-sm">
     <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
@@ -194,22 +195,22 @@ if (isLoggedIn()) {
                     </ul>
                 </li>
                 
-                <!-- Tổ chức sự kiện (Benefactor only) -->
-                <?php if (isLoggedIn()): ?>
+                <!-- Tổ chức sự kiện (Benefactor only - ẨN với Admin) -->
+                <?php if (isLoggedIn() && !isAdmin()): ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle <?= strpos($currentURI, '/benefactor/') !== false ? 'active' : '' ?>" 
                        href="#" data-bs-toggle="dropdown">
                         <i class="fas fa-hands-helping me-1"></i>TỔ CHỨC SỰ KIỆN
                     </a>
                     <ul class="dropdown-menu">
-                        <?php if (!isBenefactorVerified() && !isAdmin()): ?>
+                        <?php if (!isBenefactorVerified()): ?>
                         <li><a class="dropdown-item" href="<?= BASE_URL ?>/benefactor/register0.php">
                             <i class="fas fa-user-check text-warning me-2"></i>Đăng ký Nhà hảo tâm
                         </a></li>
                         <li><hr class="dropdown-divider"></li>
                         <?php endif; ?>
                         
-                        <?php if (isBenefactorVerified() || isAdmin()): ?>
+                        <?php if (isBenefactorVerified()): ?>
                         <li><a class="dropdown-item" href="<?= BASE_URL ?>/benefactor/create_event.php">
                             <i class="fas fa-plus-circle text-success me-2"></i>Tạo sự kiện mới
                         </a></li>
@@ -237,8 +238,8 @@ if (isLoggedIn()) {
                     </a>
                 </li>
                 
-                <!-- Hồ sơ (User only) -->
-                <?php if (isLoggedIn()): ?>
+                <!-- Hồ sơ (User only - ẨN với Admin) -->
+                <?php if (isLoggedIn() && !isAdmin()): ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle <?= in_array($currentPage, ['profile', 'my_donations', 'my_volunteers']) ? 'active' : '' ?>" 
                        href="#" data-bs-toggle="dropdown">
@@ -262,12 +263,15 @@ if (isLoggedIn()) {
                 </li>
                 <?php endif; ?>
                 
-                <!-- Liên hệ -->
+                <!-- Liên hệ (ẨN với Admin) -->
+                <?php if (!isAdmin()): ?>
                 <li class="nav-item">
-                    <a class="nav-link <?= $currentPage == 'contact' ? 'active' : '' ?>" href="<?= BASE_URL ?>/contact.php">
+                    <a class="nav-link <?= $currentPage == 'contact' ? 'active' : '' ?>" href="<?= BASE_URL ?>/pages/contact.php">
                         <i class="fas fa-phone me-1"></i>LIÊN HỆ
                     </a>
                 </li>
+                <?php endif; ?>
+                
                 <!-- Admin (Admin only) -->
                 <?php if (isAdmin()): ?>
                 <li class="nav-item dropdown">
@@ -300,7 +304,7 @@ if (isLoggedIn()) {
             
             <!-- Quick Donate Button -->
             <?php if (isLoggedIn() && (isBenefactorVerified() || isAdmin())): ?>
-            <a href="<?= BASE_URL ?>/benefactor/create_event.php" class="btn btn-danger">
+            <a href="<?= BASE_URL ?>/admin/news/create_news.php" class="btn btn-danger">
                 <i class="fas fa-plus me-2"></i>Tạo tin tức
             </a>
             <?php endif; ?>

@@ -1,5 +1,6 @@
 <?php
 require_once '../config/db.php';
+require_once '../includes/security.php'; // THIẾU DÒNG NÀY
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ' . BASE_URL . '/pages/contact.php');
@@ -8,19 +9,21 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 requireCSRF();
 
-// Rate limiting
-$rateLimit = checkRateLimit('contact', getClientIP(), 3, 3600);
-if ($rateLimit !== true) {
-    $error = urlencode($rateLimit['message']);
-    header('Location: ' . BASE_URL . '/pages/contact.php?error=' . $error);
-    exit;
+// Rate limiting - chỉ bật trên production
+if ($_SERVER['HTTP_HOST'] !== 'localhost' && strpos($_SERVER['HTTP_HOST'], '127.0.0.1') === false) {
+    $rateLimit = checkRateLimit('contact', getClientIP(), 3, 300);
+    if ($rateLimit !== true) {
+        $error = urlencode($rateLimit['message']);
+        header('Location: ' . BASE_URL . '/pages/contact.php?error=' . $error);
+        exit;
+    }
 }
 
-$name = trim($_POST['name']);
-$email = trim($_POST['email']);
+$name = trim($_POST['name'] ?? '');
+$email = trim($_POST['email'] ?? '');
 $phone = trim($_POST['phone'] ?? '');
 $subject = $_POST['subject'] ?? '';
-$message = trim($_POST['message']);
+$message = trim($_POST['message'] ?? '');
 
 // Validation
 $errors = [];
@@ -42,8 +45,8 @@ if (empty($message)) {
 }
 
 if (!empty($errors)) {
-    $errorMsg = urlencode(implode('<br>', $errors));
-    header('Location: ' . BASE_URL . '/pages/contact.php?error=' . $errorMsg);
+    setFlashMessage('error', implode('<br>', $errors));
+    header('Location: ' . BASE_URL . '/pages/contact.php');
     exit;
 }
 
@@ -71,8 +74,10 @@ try {
         FILE_APPEND
     );
     
-    // Send confirmation email
-    sendEmail($email, 'Xác nhận liên hệ - ' . SITE_NAME, "
+    // Send confirmation email (nếu có hàm sendEmail)
+    if (function_exists('sendEmail')) {
+        try {
+            sendEmail($email, 'Xác nhận liên hệ - ' . SITE_NAME, "
 Xin chào $name,
 
 Cảm ơn bạn đã liên hệ với chúng tôi!
@@ -86,17 +91,24 @@ Thông tin liên hệ:
 
 Trân trọng,
 Đội ngũ " . SITE_NAME);
+        } catch (Exception $e) {
+            error_log("Email sending failed: " . $e->getMessage());
+            // Không dừng quá trình, chỉ log lỗi
+        }
+    }
     
-    clearRateLimit('contact', getClientIP());
+    // Clear rate limit sau khi thành công
+    if (function_exists('clearRateLimit')) {
+        clearRateLimit('contact', getClientIP());
+    }
     
-    $success = urlencode('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất.');
-    header('Location: ' . BASE_URL . '/pages/contact.php?success=' . $success);
+    setFlashMessage('success', 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất.');
+    header('Location: ' . BASE_URL . '/pages/contact.php');
     exit;
     
 } catch (PDOException $e) {
     error_log("Contact Error: " . $e->getMessage());
-    $error = urlencode('Đã xảy ra lỗi. Vui lòng thử lại sau.');
-    header('Location: ' . BASE_URL . '/pages/contact.php?error=' . $error);
+    setFlashMessage('error', 'Đã xảy ra lỗi. Vui lòng thử lại sau.');
+    header('Location: ' . BASE_URL . '/pages/contact.php');
     exit;
 }
-?>

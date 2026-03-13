@@ -91,7 +91,13 @@ include '../includes/navbar.php';
                 <div class="card-body text-center">
                     <div class="mb-3">
                         <?php if ($user['avatar']): ?>
-                        <img src="<?= BASE_URL ?>/public/uploads/avatars/<?= $user['avatar'] ?>" 
+                        <?php
+$thumb = $user['avatar'];
+if (strpos($thumb, 'avatars/') !== 0) {
+    $thumb = 'avatars/' . $thumb;
+}
+?>
+<img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>"
                              class="rounded-circle" width="80" height="80" style="object-fit: cover;">
                         <?php else: ?>
                         <div class="rounded-circle bg-danger text-white d-inline-flex align-items-center justify-content-center" 
@@ -228,7 +234,13 @@ include '../includes/navbar.php';
                                 <tr>
                                     <td class="ps-4">
                                         <div class="d-flex align-items-center">
-                                            <img src="<?= BASE_URL ?>/public/uploads/events/<?= $donation['thumbnail'] ?>" 
+                                            <?php
+                                            $thumb = $donation['thumbnail'];
+                                            if (strpos($thumb, 'events/') !== 0) {
+                                                $thumb = 'events/' . $thumb;
+                                            }
+                                            ?>
+                                            <img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($thumb) ?>" 
                                                  class="rounded me-3" 
                                                  style="width: 50px; height: 50px; object-fit: cover;">
                                             <div>

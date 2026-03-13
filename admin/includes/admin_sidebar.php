@@ -72,19 +72,6 @@ $currentDir = basename(dirname($_SERVER['PHP_SELF']));
                 </a>
             </li>
             
-            <li class="nav-item">
-                <a class="nav-link <?= $currentPage == 'approve_event.php' ? 'active' : '' ?>" 
-                   href="<?= BASE_URL ?>/admin/events/approve_event.php">
-                    <i class="bi bi-check-circle"></i> Duyệt sự kiện
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link <?= $currentPage == 'reject_event.php' ? 'active' : '' ?>" 
-                   href="<?= BASE_URL ?>/admin/events/reject_event.php">
-                    <i class="bi bi-x-circle"></i> Từ chối
-                </a>
-            </li>
             
             <li class="nav-item">
                 <a class="nav-link <?= $currentPage == 'close_event.php' ? 'active' : '' ?>" 
@@ -107,25 +94,7 @@ $currentDir = basename(dirname($_SERVER['PHP_SELF']));
                 </a>
             </li>
             
-            <li class="nav-item">
-                <a class="nav-link <?= $currentPage == 'pending_donations.php' ? 'active' : '' ?>" 
-                   href="<?= BASE_URL ?>/admin/donations/pending_donations.php">
-                    <i class="bi bi-hourglass-split"></i> Chờ xác nhận
-                    <?php 
-                    $pendingDonations = $pdo->query("SELECT COUNT(*) FROM donations WHERE status = 'pending'")->fetchColumn();
-                    if ($pendingDonations > 0): 
-                    ?>
-                    <span class="badge bg-warning text-dark ms-2"><?= $pendingDonations ?></span>
-                    <?php endif; ?>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link <?= $currentPage == 'verify_donation.php' ? 'active' : '' ?>" 
-                   href="<?= BASE_URL ?>/admin/donations/verify_donation.php">
-                    <i class="bi bi-check-square"></i> Xác minh
-                </a>
-            </li>
+        
             
             <!-- Volunteers -->
             <li class="nav-item">

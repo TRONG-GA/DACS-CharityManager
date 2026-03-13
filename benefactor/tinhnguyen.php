@@ -1,30 +1,16 @@
 <?php
-// Khởi tạo session an toàn để lấy user_id
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Bắt buộc đăng nhập và phải có quyền nhà hảo tâm
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'benefactor') {
-    header("Location: ../index.php");
-    exit;
-}
-
+// Bật lỗi để dễ debug
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ 
+require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../includes/security.php';
+ 
+// Yêu cầu benefactor đã verified
+requireBenefactorVerified();
+ 
 $user_id = $_SESSION['user_id'];
-
-// Thông tin kết nối CSDL
-$host = '127.0.0.1';
-$dbname = 'charity_event'; 
-$username = 'root'; 
-$password = ''; 
-
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Lỗi kết nối CSDL: " . $e->getMessage());
-}
-
+ 
 // 1. XỬ LÝ GET REQUEST: DUYỆT / TỪ CHỐI / ĐIỂM DANH
 if (isset($_GET['action']) && isset($_GET['id'])) {
     $id = (int)$_GET['id'];
@@ -53,26 +39,30 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
     header("Location: tinhnguyen.php");
     exit;
 }
-
+ 
 // 2. XỬ LÝ POST REQUEST: LƯU ĐÁNH GIÁ (RATING & FEEDBACK)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'submit_feedback') {
+    requireCSRF();
+    
     $vol_id = (int)$_POST['volunteer_id'];
     $rating = (int)$_POST['rating'];
-    $feedback = trim($_POST['organizer_feedback']);
-
+    $feedback = sanitize($_POST['organizer_feedback']);
+ 
     // Kiểm tra bảo mật
     $checkSql = "SELECT ev.id FROM event_volunteers ev INNER JOIN events e ON ev.event_id = e.id WHERE ev.id = :id AND e.user_id = :user_id";
     $checkStmt = $pdo->prepare($checkSql);
     $checkStmt->execute(['id' => $vol_id, 'user_id' => $user_id]);
-
+ 
     if ($checkStmt->fetch()) {
         $stmt = $pdo->prepare("UPDATE event_volunteers SET rating = :rating, organizer_feedback = :feedback WHERE id = :id");
         $stmt->execute(['rating' => $rating, 'feedback' => $feedback, 'id' => $vol_id]);
     }
+    
+    setFlashMessage('success', 'Đã lưu đánh giá thành công!');
     header("Location: tinhnguyen.php");
     exit;
 }
-
+ 
 // LẤY DỮ LIỆU TÌNH NGUYỆN VIÊN (Của các sự kiện do user này tổ chức)
 $sql = "SELECT ev.*, e.title as event_title 
         FROM event_volunteers ev 
@@ -82,19 +72,21 @@ $sql = "SELECT ev.*, e.title as event_title
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['user_id' => $user_id]);
 $volunteers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+ 
 // TÍNH TOÁN THỐNG KÊ
 $totalVolunteers = count($volunteers);
 $pendingCount = 0;
 $approvedCount = 0;
-
+ 
 foreach ($volunteers as $v) {
     $st = $v['status'] ?? 'pending';
     if ($st == 'pending') $pendingCount++;
     if ($st == 'approved') $approvedCount++;
 }
+ 
+$message = getFlashMessage();
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -134,29 +126,37 @@ foreach ($volunteers as $v) {
         .bg-green { background-color: #28a745; } .bg-green:hover { background-color: #1e7e34; }
         .bg-gray { background-color: #6c757d; } .bg-gray:hover { background-color: #5a6268; }
         .bg-danger { background-color: #dc3545; } .bg-danger:hover { background-color: #bd2130; }
-
+ 
         .star-rating { color: #ffc107; font-size: 16px; letter-spacing: 2px; }
     </style>
 </head>
 <body>
-
+ 
 <div class="dashboard-wrapper">
     <aside class="sidebar">
         <a href="../index.php" style="text-decoration: none;"><div class="sidebar-logo">Charity Events</div></a>
         <ul class="sidebar-menu">
             <li><a href="dashboard.php">📊 Tổng quan</a></li>
-            <li><a href="#">💸 Báo cáo minh bạch (Thu/Chi)</a></li>
+            <li><a href="create_campaign.php">+ Tạo chiến dịch mới</a></li>
+            <li><a href="ledger.php">💸 Sổ quỹ</a></li>
             <li><a href="manage_news.php">📝 Đăng tin tức</a></li>
             <li class="active"><a href="tinhnguyen.php">👥 Quản lý tình nguyện viên</a></li>
             <li><a href="settings.php">⚙️ Cài đặt tài khoản</a></li>
         </ul>
     </aside>
-
+ 
     <main class="main-content">
         <div class="dash-header">
             <h1 class="dash-title">Quản lý tình nguyện viên</h1>
         </div>
-
+ 
+        <?php if ($message): ?>
+            <div class="alert alert-<?= $message['type'] ?> alert-dismissible fade show">
+                <?= $message['message'] ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
+ 
         <div class="stat-grid">
             <div class="stat-card">
                 <div class="stat-title">TỔNG SỐ TÌNH NGUYỆN VIÊN</div>
@@ -171,7 +171,7 @@ foreach ($volunteers as $v) {
                 <div class="stat-value"><?= $approvedCount ?></div>
             </div>
         </div>
-
+ 
         <div class="table-container">
             <div class="table-header">
                 <h3>Danh sách tình nguyện viên gần đây</h3>
@@ -199,20 +199,17 @@ foreach ($volunteers as $v) {
                                        onclick="showVolunteerModal(this)" 
                                        data-info='<?= htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8') ?>'
                                        style="color: #007bff; font-weight: 600; text-decoration: none; font-size: 15px;">
-                                        <?= htmlspecialchars($row['fullname'] ?? 'N/A') ?>
+                                        <?= sanitize($row['fullname'] ?? 'N/A') ?>
                                     </a>
                                     <br>
-                                    <small style="color: #666;">Sự kiện: <?= htmlspecialchars($row['event_title'] ?? 'Không rõ') ?></small>
+                                    <small style="color: #666;">Sự kiện: <?= sanitize($row['event_title'] ?? 'Không rõ') ?></small>
                                 </td>
                                 <td>
-                                    <div style="font-size: 13px;">📞 <?= htmlspecialchars($row['phone'] ?? '') ?></div>
-                                    <div style="font-size: 13px;">✉️ <?= htmlspecialchars($row['email'] ?? '') ?></div>
+                                    <div style="font-size: 13px;">📞 <?= sanitize($row['phone'] ?? '') ?></div>
+                                    <div style="font-size: 13px;">✉️ <?= sanitize($row['email'] ?? '') ?></div>
                                 </td>
                                 <td style="font-size: 13px;">
-                                    <?php 
-                                        $date = date_create($row['created_at']);
-                                        echo date_format($date, "d/m/Y H:i");
-                                    ?>
+                                    <?= date('d/m/Y H:i', strtotime($row['created_at'])) ?>
                                 </td>
                                 <td>
                                     <?php 
@@ -250,11 +247,11 @@ foreach ($volunteers as $v) {
                                             <div class="star-rating"><?= str_repeat('★', $rating) . str_repeat('☆', 5 - $rating) ?></div>
                                             <button onclick="viewFeedback(this)" data-info='<?= htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8') ?>' class="btn-action-sm bg-gray" style="margin-top: 5px; font-size: 11px;">👁️ Xem nhận xét</button>
                                         <?php endif; ?>
-
+ 
                                     <?php elseif ($status == 'rejected'): ?>
                                         <span style="color: #999; font-size: 13px; font-style: italic;">Không có thao tác</span>
                                     <?php endif; ?>
-
+ 
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -268,7 +265,8 @@ foreach ($volunteers as $v) {
         </div>
     </main>
 </div>
-
+ 
+<!-- Modal Chi tiết -->
 <div id="volunteerModal" class="modal-custom">
     <div class="modal-content-custom">
         <div class="modal-header">
@@ -284,7 +282,7 @@ foreach ($volunteers as $v) {
             <div class="info-group"><label>Số điện thoại:</label> <span id="m_phone"></span></div>
             <div class="info-group"><label>Email:</label> <span id="m_email"></span></div>
             <div class="info-group"><label>Nghề nghiệp:</label> <span id="m_occupation"></span></div>
-
+ 
             <div class="info-section-title">Kỹ năng & Kinh nghiệm</div>
             <div class="info-group"><label>Kỹ năng:</label> <span id="m_skills"></span></div>
             <div class="info-group"><label>Kinh nghiệm cũ:</label> <span id="m_experience"></span></div>
@@ -292,7 +290,8 @@ foreach ($volunteers as $v) {
         </div>
     </div>
 </div>
-
+ 
+<!-- Modal Đánh giá -->
 <div id="feedbackModal" class="modal-custom">
     <div class="modal-content-custom" style="width: 500px;">
         <div class="modal-header">
@@ -300,6 +299,7 @@ foreach ($volunteers as $v) {
             <span class="close-btn" onclick="document.getElementById('feedbackModal').style.display='none'">&times;</span>
         </div>
         <form method="POST" action="tinhnguyen.php">
+            <?= csrfField() ?>
             <input type="hidden" name="action" value="submit_feedback">
             <input type="hidden" name="volunteer_id" id="fb_volunteer_id">
             
@@ -315,17 +315,18 @@ foreach ($volunteers as $v) {
                     <option value="1">⭐ (Kém - Vi phạm kỷ luật sự kiện)</option>
                 </select>
             </div>
-
+ 
             <div style="margin-bottom: 20px;">
-                <label style="display:block; font-weight: bold; margin-bottom: 5px;">Nhận xét chi tiết (organizer_feedback):</label>
+                <label style="display:block; font-weight: bold; margin-bottom: 5px;">Nhận xét chi tiết:</label>
                 <textarea name="organizer_feedback" rows="4" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-family: inherit; box-sizing: border-box;" placeholder="Vd: Bạn làm việc rất tốt, hòa đồng và hỗ trợ ban tổ chức nhiệt tình..."></textarea>
             </div>
-
+ 
             <button type="submit" class="btn-action-sm bg-orange" style="width: 100%; padding: 12px; font-size: 16px;">LƯU ĐÁNH GIÁ</button>
         </form>
     </div>
 </div>
-
+ 
+<!-- Modal Xem đánh giá -->
 <div id="viewFeedbackModal" class="modal-custom">
     <div class="modal-content-custom" style="width: 500px;">
         <div class="modal-header">
@@ -342,9 +343,9 @@ foreach ($volunteers as $v) {
         </div>
     </div>
 </div>
-
+ 
 <script>
-// Mở Modal Xem chi tiết (Đã có sẵn)
+// Mở Modal Xem chi tiết
 function showVolunteerModal(element) {
     const data = JSON.parse(element.getAttribute('data-info'));
     document.getElementById('m_fullname').innerText = data.fullname || 'Chưa cập nhật';
@@ -360,14 +361,14 @@ function showVolunteerModal(element) {
     else if(data.gender === 'female') gender = 'Nữ';
     else if(data.gender === 'other') gender = 'Khác';
     document.getElementById('m_gender').innerText = gender;
-
+ 
     let dob = data.birth_date || data.date_of_birth || 'Chưa cập nhật';
     if(dob !== 'Chưa cập nhật') {
         let d = new Date(dob);
         dob = d.toLocaleDateString('vi-VN');
     }
     document.getElementById('m_dob').innerText = dob;
-
+ 
     let skills = 'Không có';
     if(data.skills) {
         try {
@@ -379,14 +380,14 @@ function showVolunteerModal(element) {
     document.getElementById('m_skills').innerText = skills;
     document.getElementById('volunteerModal').style.display = 'block';
 }
-
+ 
 // Mở Modal Nhập Đánh giá
 function openFeedbackModal(id, fullname) {
     document.getElementById('fb_volunteer_id').value = id;
     document.getElementById('fb_fullname').innerText = fullname;
     document.getElementById('feedbackModal').style.display = 'block';
 }
-
+ 
 // Mở Modal Xem Đánh giá
 function viewFeedback(element) {
     const data = JSON.parse(element.getAttribute('data-info'));
@@ -401,7 +402,7 @@ function viewFeedback(element) {
     
     document.getElementById('viewFeedbackModal').style.display = 'block';
 }
-
+ 
 // Đóng modal khi bấm nền đen
 window.onclick = function(event) {
     if (event.target.className === 'modal-custom') {
@@ -409,6 +410,6 @@ window.onclick = function(event) {
     }
 }
 </script>
-
+ 
 </body>
 </html>

@@ -66,6 +66,26 @@ $stats = [
     'draft' => $pdo->query("SELECT COUNT(*) FROM news WHERE status = 'draft'")->fetchColumn(),
     'published' => $pdo->query("SELECT COUNT(*) FROM news WHERE status = 'published'")->fetchColumn(),
 ];
+
+// Define labels arrays for reuse
+$categoryLabels = [
+    'announcement' => 'Thông báo',
+    'news' => 'Tin tức',
+    'success_story' => 'Câu chuyện',
+    'guide' => 'Hướng dẫn'
+];
+
+$statusColors = [
+    'draft' => 'warning',
+    'published' => 'success',
+    'archived' => 'secondary'
+];
+
+$statusLabels = [
+    'draft' => 'Bản nháp',
+    'published' => 'Xuất bản',
+    'archived' => 'Lưu trữ'
+];
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -193,50 +213,32 @@ $stats = [
                                             <td><?= $news['id'] ?></td>
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <?php if ($news['thumbnail']): ?>
+                                                    <?php if (!empty($news['thumbnail'])): ?>
                                                     <img src="<?= BASE_URL ?>/public/uploads/news/<?= $news['thumbnail'] ?>" 
                                                          alt="Thumbnail" class="me-2" 
                                                          style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
                                                     <?php endif; ?>
                                                     <div>
                                                         <strong><?= htmlspecialchars($news['title']) ?></strong>
-                                                        <?php if ($news['is_featured']): ?>
+                                                        <?php if (!empty($news['is_featured'])): ?>
                                                         <span class="badge bg-warning text-dark ms-1">Nổi bật</span>
                                                         <?php endif; ?>
-                                                        <?php if ($news['is_breaking']): ?>
+                                                        <?php if (!empty($news['is_breaking'])): ?>
                                                         <span class="badge bg-danger ms-1">Breaking</span>
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <?php
-                                                $categoryLabels = [
-                                                    'announcement' => 'Thông báo',
-                                                    'news' => 'Tin tức',
-                                                    'success_story' => 'Câu chuyện',
-                                                    'guide' => 'Hướng dẫn'
-                                                ];
-                                                ?>
-                                                <span class="badge bg-secondary"><?= $categoryLabels[$news['category']] ?></span>
+                                                <span class="badge bg-secondary">
+                                                    <?= $categoryLabels[$news['category']] ?? 'Khác' ?>
+                                                </span>
                                             </td>
-                                            <td><small><?= htmlspecialchars($news['author_name']) ?></small></td>
-                                            <td><small><?= number_format($news['views']) ?></small></td>
+                                            <td><small><?= htmlspecialchars($news['author_name'] ?? 'N/A') ?></small></td>
+                                            <td><small><?= number_format($news['views'] ?? 0) ?></small></td>
                                             <td>
-                                                <?php
-                                                $statusColors = [
-                                                    'draft' => 'warning',
-                                                    'published' => 'success',
-                                                    'archived' => 'secondary'
-                                                ];
-                                                $statusLabels = [
-                                                    'draft' => 'Bản nháp',
-                                                    'published' => 'Xuất bản',
-                                                    'archived' => 'Lưu trữ'
-                                                ];
-                                                ?>
-                                                <span class="badge bg-<?= $statusColors[$news['status']] ?>">
-                                                    <?= $statusLabels[$news['status']] ?>
+                                                <span class="badge bg-<?= $statusColors[$news['status']] ?? 'secondary' ?>">
+                                                    <?= $statusLabels[$news['status']] ?? 'Không xác định' ?>
                                                 </span>
                                             </td>
                                             <td><small><?= formatDate($news['created_at'], 'd/m/Y') ?></small></td>
