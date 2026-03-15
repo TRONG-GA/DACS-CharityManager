@@ -27,7 +27,7 @@ require_once __DIR__ . '/constants.php';
 try {
     $pdo = new PDO(
         "mysql:host=" . DB_HOST .
-        ";port=3309" .
+        ";port=3306" .
         ";dbname=" . DB_NAME .
         ";charset=utf8mb4",
         DB_USER,
@@ -50,7 +50,11 @@ function sanitize($data) {
     if (is_array($data)) {
         return array_map('sanitize', $data);
     }
-    return htmlspecialchars(strip_tags(trim($data)), ENT_QUOTES, 'UTF-8');
+    
+    // Fix lỗi PHP 8.1+: Nếu $data là null thì gán bằng chuỗi rỗng ''
+    $dataStr = $data ?? ''; 
+    
+    return htmlspecialchars(strip_tags(trim($dataStr)), ENT_QUOTES, 'UTF-8');
 }
 
 function hashPassword($password) {
