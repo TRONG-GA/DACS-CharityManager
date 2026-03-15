@@ -3,7 +3,7 @@ require_once '../config/db.php';
 
 // Get slug from URL
 $slug = $_GET['slug'] ?? '';
-
+// events/event_detail.php?slug
 if (empty($slug)) {
     header('Location: ' . BASE_URL . '/events/events.php');
     exit;

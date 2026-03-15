@@ -73,12 +73,7 @@ $currentDir = basename(dirname($_SERVER['PHP_SELF']));
             </li>
             
             
-            <li class="nav-item">
-                <a class="nav-link <?= $currentPage == 'close_event.php' ? 'active' : '' ?>" 
-                   href="<?= BASE_URL ?>/admin/events/close_event.php">
-                    <i class="bi bi-archive"></i> Đóng sự kiện
-                </a>
-            </li>
+          
             
             <li class="nav-item mt-3">
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-1 text-muted">

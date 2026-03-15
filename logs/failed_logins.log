@@ -22,3 +22,8 @@
 [2026-03-11 10:10:47] Failed Login - Email: test@gmail.com | IP: ::1 | Reason: Email not found
 [2026-03-11 10:13:30] Failed Login - Email: test@gmail.com | IP: ::1 | Reason: Email not found
 [2026-03-12 10:00:12] Failed Login - Email: test@gmail.com | IP: ::1 | Reason: Email not found
+[2026-03-14 10:04:14] Failed Login - Email: kimkhuong@gmail.com | IP: ::1 | Reason: Email not found
+[2026-03-14 10:08:03] Failed Login - Email: admin@charityevent.vn | IP: ::1 | Reason: Wrong password
+[2026-03-14 21:44:15] Failed Login - Email: kimkhuong@gmail.com | IP: ::1 | Reason: Email not found
+[2026-03-14 21:44:37] Failed Login - Email: kimkhuong10a2@gmail.com | IP: ::1 | Reason: Wrong password
+[2026-03-14 21:45:00] Failed Login - Email: kimkhuong10a2@gmail.com | IP: ::1 | Reason: Wrong password

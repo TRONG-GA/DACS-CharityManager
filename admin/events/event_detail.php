@@ -29,30 +29,34 @@ $stmt->execute([$eventId]);
 $event = $stmt->fetch();
 
 if (!$event) {
-    setFlashMessage('error', 'Không tìm thấy sự kiện');
+    setFlashMessage('Không tìm thấy sự kiện', 'error');
     header('Location: all_events.php');
     exit;
 }
 
-// Get donations
-$donations = $pdo->prepare("
+// Get donations - SỬA LỖI
+$stmtDonations = $pdo->prepare("
     SELECT d.*, u.fullname as donor_name
     FROM donations d
     LEFT JOIN users u ON d.user_id = u.id
     WHERE d.event_id = ?
     ORDER BY d.created_at DESC
     LIMIT 10
-")->execute([$eventId])->fetchAll();
+");
+$stmtDonations->execute([$eventId]);
+$donations = $stmtDonations->fetchAll(PDO::FETCH_ASSOC);
 
-// Get volunteers
-$volunteers = $pdo->prepare("
-    SELECT ev.*, u.fullname as user_fullname
+// Get volunteers - SỬA LỖI
+$stmtVolunteers = $pdo->prepare("
+    SELECT ev.*, u.fullname as user_fullname, u.email, u.phone
     FROM event_volunteers ev
     LEFT JOIN users u ON ev.user_id = u.id
     WHERE ev.event_id = ?
     ORDER BY ev.created_at DESC
     LIMIT 10
-")->execute([$eventId])->fetchAll();
+");
+$stmtVolunteers->execute([$eventId]);
+$volunteers = $stmtVolunteers->fetchAll(PDO::FETCH_ASSOC);
 
 // Calculate progress
 $progress = $event['target_amount'] > 0 
@@ -66,7 +70,7 @@ $pageTitle = 'Chi tiết sự kiện';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $pageTitle ?> - <?= SITE_NAME ?></title>
+    <title><?= htmlspecialchars($pageTitle) ?> - <?= SITE_NAME ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
@@ -83,7 +87,7 @@ $pageTitle = 'Chi tiết sự kiện';
                         <a href="all_events.php" class="text-decoration-none text-muted">
                             <i class="bi bi-arrow-left"></i>
                         </a>
-                        <?= $pageTitle ?>
+                        <?= htmlspecialchars($pageTitle) ?>
                     </h1>
                     <div class="btn-toolbar">
                         <?php if ($event['status'] === 'pending'): ?>
@@ -109,8 +113,8 @@ $pageTitle = 'Chi tiết sự kiện';
                 $flash = getFlashMessage();
                 if ($flash): 
                 ?>
-                <div class="alert alert-<?= $flash['type'] ?> alert-dismissible fade show" role="alert">
-                    <?= $flash['message'] ?>
+                <div class="alert alert-<?= htmlspecialchars($flash['type']) ?> alert-dismissible fade show" role="alert">
+                    <?= htmlspecialchars($flash['message']) ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
                 <?php endif; ?>
@@ -121,9 +125,11 @@ $pageTitle = 'Chi tiết sự kiện';
                         <!-- Event Info Card -->
                         <div class="card mb-4">
                             <div class="card-body">
-                                <?php if ($event['thumbnail']): ?>
-                                <img src="<?= BASE_URL ?>/public/uploads/events/<?= $event['thumbnail'] ?>" 
-                                     alt="Thumbnail" class="img-fluid rounded mb-3">
+                                <?php if (!empty($event['thumbnail'])): ?>
+                                <img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($event['thumbnail']) ?>" 
+                                     alt="<?= htmlspecialchars($event['title']) ?>" 
+                                     class="img-fluid rounded mb-3"
+                                     onerror="this.src='<?= BASE_URL ?>/public/images/no-image.jpg'">
                                 <?php endif; ?>
                                 
                                 <h3><?= htmlspecialchars($event['title']) ?></h3>
@@ -146,11 +152,20 @@ $pageTitle = 'Chi tiết sự kiện';
                                         'completed' => 'Hoàn thành',
                                         'closed' => 'Đã đóng'
                                     ];
+                                    
+                                    $categories = [
+                                        'education' => 'Giáo dục',
+                                        'medical' => 'Y tế',
+                                        'disaster' => 'Thiên tai',
+                                        'charity' => 'Từ thiện',
+                                        'community' => 'Cộng đồng',
+                                        'other' => 'Khác'
+                                    ];
                                     ?>
                                     <span class="badge bg-<?= $statusColors[$event['status']] ?> me-2">
                                         <?= $statusLabels[$event['status']] ?>
                                     </span>
-                                    <span class="badge bg-secondary"><?= ucfirst($event['category']) ?></span>
+                                    <span class="badge bg-secondary"><?= $categories[$event['category']] ?? ucfirst($event['category']) ?></span>
                                     <?php if ($event['is_featured']): ?>
                                     <span class="badge bg-primary"><i class="bi bi-star"></i> Nổi bật</span>
                                     <?php endif; ?>
@@ -165,15 +180,19 @@ $pageTitle = 'Chi tiết sự kiện';
                                     </div>
                                     <div class="col-md-6">
                                         <p><i class="bi bi-calendar"></i> <strong>Thời gian:</strong> 
-                                        <?= formatDate($event['start_date']) ?> - <?= formatDate($event['end_date']) ?></p>
+                                        <?= date('d/m/Y', strtotime($event['start_date'])) ?> - <?= date('d/m/Y', strtotime($event['end_date'])) ?></p>
                                     </div>
                                 </div>
 
+                                <?php if (!empty($event['description'])): ?>
                                 <h5>Mô tả:</h5>
                                 <p><?= nl2br(htmlspecialchars($event['description'])) ?></p>
+                                <?php endif; ?>
 
+                                <?php if (!empty($event['content'])): ?>
                                 <h5>Nội dung chi tiết:</h5>
                                 <div><?= $event['content'] ?></div>
+                                <?php endif; ?>
                             </div>
                         </div>
 
@@ -209,18 +228,19 @@ $pageTitle = 'Chi tiết sự kiện';
                                         <tbody>
                                             <?php foreach ($donations as $d): ?>
                                             <tr>
-                                                <td><?= $d['is_anonymous'] ? 'Ẩn danh' : htmlspecialchars($d['donor_name'] ?? $d['donor_name']) ?></td>
-                                                <td><strong class="text-success"><?= formatMoney($d['amount']) ?></strong></td>
-                                                <td><?= $d['payment_method'] ?></td>
+                                                <td><?= $d['is_anonymous'] ? 'Ẩn danh' : htmlspecialchars($d['donor_name'] ?? 'Khách') ?></td>
+                                                <td><strong class="text-success"><?= number_format($d['amount'], 0, ',', '.') ?> VNĐ</strong></td>
+                                                <td><?= htmlspecialchars($d['payment_method']) ?></td>
                                                 <td>
                                                     <?php
-                                                    $colors = ['pending' => 'warning', 'completed' => 'success', 'failed' => 'danger'];
+                                                    $donationStatusColors = ['pending' => 'warning', 'completed' => 'success', 'failed' => 'danger'];
+                                                    $donationStatusLabels = ['pending' => 'Chờ xử lý', 'completed' => 'Hoàn thành', 'failed' => 'Thất bại'];
                                                     ?>
-                                                    <span class="badge bg-<?= $colors[$d['status']] ?>">
-                                                        <?= ucfirst($d['status']) ?>
+                                                    <span class="badge bg-<?= $donationStatusColors[$d['status']] ?? 'secondary' ?>">
+                                                        <?= $donationStatusLabels[$d['status']] ?? ucfirst($d['status']) ?>
                                                     </span>
                                                 </td>
-                                                <td><small><?= timeAgo($d['created_at']) ?></small></td>
+                                                <td><small><?= date('d/m/Y H:i', strtotime($d['created_at'])) ?></small></td>
                                             </tr>
                                             <?php endforeach; ?>
                                         </tbody>
@@ -251,18 +271,19 @@ $pageTitle = 'Chi tiết sự kiện';
                                         <tbody>
                                             <?php foreach ($volunteers as $v): ?>
                                             <tr>
-                                                <td><?= htmlspecialchars($v['fullname']) ?></td>
-                                                <td><?= htmlspecialchars($v['email']) ?></td>
-                                                <td><?= htmlspecialchars($v['phone']) ?></td>
+                                                <td><?= htmlspecialchars($v['fullname'] ?? $v['user_fullname'] ?? 'N/A') ?></td>
+                                                <td><?= htmlspecialchars($v['email'] ?? 'N/A') ?></td>
+                                                <td><?= htmlspecialchars($v['phone'] ?? 'N/A') ?></td>
                                                 <td>
                                                     <?php
-                                                    $colors = ['pending' => 'warning', 'approved' => 'success', 'rejected' => 'danger'];
+                                                    $volunteerStatusColors = ['pending' => 'warning', 'approved' => 'success', 'rejected' => 'danger'];
+                                                    $volunteerStatusLabels = ['pending' => 'Chờ duyệt', 'approved' => 'Đã duyệt', 'rejected' => 'Từ chối'];
                                                     ?>
-                                                    <span class="badge bg-<?= $colors[$v['status']] ?>">
-                                                        <?= ucfirst($v['status']) ?>
+                                                    <span class="badge bg-<?= $volunteerStatusColors[$v['status']] ?? 'secondary' ?>">
+                                                        <?= $volunteerStatusLabels[$v['status']] ?? ucfirst($v['status']) ?>
                                                     </span>
                                                 </td>
-                                                <td><small><?= timeAgo($v['created_at']) ?></small></td>
+                                                <td><small><?= date('d/m/Y H:i', strtotime($v['created_at'])) ?></small></td>
                                             </tr>
                                             <?php endforeach; ?>
                                         </tbody>
@@ -290,16 +311,16 @@ $pageTitle = 'Chi tiết sự kiện';
                                 </div>
                                 <div class="d-flex justify-content-between mb-2">
                                     <span>Đã quyên góp:</span>
-                                    <strong class="text-success"><?= formatMoney($event['raised_amount']) ?></strong>
+                                    <strong class="text-success"><?= number_format($event['raised_amount'], 0, ',', '.') ?> VNĐ</strong>
                                 </div>
                                 <div class="d-flex justify-content-between mb-2">
                                     <span>Mục tiêu:</span>
-                                    <strong><?= formatMoney($event['target_amount']) ?></strong>
+                                    <strong><?= number_format($event['target_amount'], 0, ',', '.') ?> VNĐ</strong>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <span>Còn thiếu:</span>
                                     <strong class="text-danger">
-                                        <?= formatMoney(max(0, $event['target_amount'] - $event['raised_amount'])) ?>
+                                        <?= number_format(max(0, $event['target_amount'] - $event['raised_amount']), 0, ',', '.') ?> VNĐ
                                     </strong>
                                 </div>
                             </div>
@@ -313,7 +334,7 @@ $pageTitle = 'Chi tiết sự kiện';
                             <div class="card-body">
                                 <h6><?= htmlspecialchars($event['benefactor_name']) ?></h6>
                                 <p class="mb-1"><i class="bi bi-envelope"></i> <?= htmlspecialchars($event['benefactor_email']) ?></p>
-                                <?php if ($event['benefactor_phone']): ?>
+                                <?php if (!empty($event['benefactor_phone'])): ?>
                                 <p class="mb-1"><i class="bi bi-telephone"></i> <?= htmlspecialchars($event['benefactor_phone']) ?></p>
                                 <?php endif; ?>
                                 <a href="../users/user_detail.php?id=<?= $event['user_id'] ?>" class="btn btn-sm btn-outline-primary mt-2">
@@ -342,20 +363,20 @@ $pageTitle = 'Chi tiết sự kiện';
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <span>Ngày tạo:</span>
-                                    <small><?= formatDate($event['created_at'], 'd/m/Y H:i') ?></small>
+                                    <small><?= date('d/m/Y H:i', strtotime($event['created_at'])) ?></small>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Admin Info -->
-                        <?php if ($event['approved_by']): ?>
+                        <?php if (!empty($event['approved_by'])): ?>
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="mb-0"><i class="bi bi-shield-check"></i> Thông tin duyệt</h5>
                             </div>
                             <div class="card-body">
                                 <p class="mb-1"><strong>Người duyệt:</strong> <?= htmlspecialchars($event['approved_by_name']) ?></p>
-                                <p class="mb-0"><strong>Thời gian:</strong> <?= formatDate($event['approved_at'], 'd/m/Y H:i') ?></p>
+                                <p class="mb-0"><strong>Thời gian:</strong> <?= date('d/m/Y H:i', strtotime($event['approved_at'])) ?></p>
                             </div>
                         </div>
                         <?php endif; ?>

@@ -236,7 +236,7 @@ $pageTitle = 'Dashboard Quản lý Sự kiện';
     <ul class="sidebar-menu">
         <li class="active"><a href="dashboard.php">📊 Tổng quan</a></li>
         <li><a href="create_campaign.php">+ Tạo sự kiện mới</a></li>
-        <li><a href="manage_news.php">📝 Đăng tin tức</a></li>
+        <li><a href="financial_report.php">💰 Báo cáo thu chi</a></li>
         <li><a href="tinhnguyen.php">👥 Quản lý tình nguyện viên</a></li>
         <li><a href="settings.php">⚙️ Cài đặt tài khoản</a></li>
         <li><a href="../auth/logout.php">🚪 Đăng xuất</a></li>
