@@ -1,9 +1,10 @@
 <?php
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/security.php';
+
 // Chỉ chấp nhận POST request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ' . BASE_URL . '/register.php');
+    header('Location: ' . BASE_URL . '/auth/register.php');
     exit;
 }
 
@@ -12,10 +13,10 @@ requireCSRF();
 
 // Rate limiting - Chống spam đăng ký
 $ip = getClientIP();
-$rateLimit = checkRateLimit('register', $ip, 20, 3600); // 5 lần/giờ
+$rateLimit = checkRateLimit('register', $ip, 5, 3600); // 5 lần/giờ
 if ($rateLimit !== true) {
     setFlashMessage('error', $rateLimit['message']);
-    header('Location: ' . BASE_URL . '/register.php');
+    header('Location: ' . BASE_URL . '/auth/register.php');
     exit;
 }
 
@@ -101,7 +102,7 @@ if (!empty($errors)) {
         'phone' => $phone
     ];
     
-    header('Location: ' . BASE_URL . '/register.php');
+    header('Location: ' . BASE_URL . '/auth/register.php');
     exit;
 }
 
@@ -136,7 +137,12 @@ try {
     // GHI LOG ĐĂNG KÝ
     // =====================================================
     
-    $logFile = dirname(__DIR__) . '/logs/registrations.log';
+    $logDir = dirname(__DIR__) . '/logs';
+    if (!is_dir($logDir)) {
+        mkdir($logDir, 0755, true);
+    }
+    
+    $logFile = $logDir . '/registrations.log';
     $logContent = sprintf(
         "[%s] New Registration - ID: %d | Email: %s | IP: %s | User Agent: %s\n",
         date('Y-m-d H:i:s'),
@@ -176,7 +182,7 @@ try {
     // Lấy thông tin user vừa tạo
     $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->execute([$userId]);
-    $user = $stmt->fetch();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     // Đăng nhập
     login($user);
@@ -211,7 +217,6 @@ try {
     
     // Thông báo lỗi chung
     setFlashMessage('error', 'Đã xảy ra lỗi trong quá trình đăng ký. Vui lòng thử lại sau.');
-    header('Location: ' . BASE_URL . '/register.php');
+    header('Location: ' . BASE_URL . '/auth/register.php');
     exit;
 }
-?>
