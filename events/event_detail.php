@@ -99,9 +99,7 @@ include '../includes/navbar.php';
 <div class="event-detail-page">
     <div class="container">
         <div class="row">
-            <!-- Main Content -->
             <div class="col-lg-8">
-                <!-- Flash Message -->
                 <?php if ($alertMessage): ?>
                 <div class="alert alert-<?= $alertMessage['type'] == 'error' ? 'danger' : $alertMessage['type'] ?> alert-dismissible fade show">
                     <?= $alertMessage['message'] ?>
@@ -109,7 +107,6 @@ include '../includes/navbar.php';
                 </div>
                 <?php endif; ?>
                 
-                <!-- Hero Image -->
                 <div class="event-hero">
                     <?php
 $thumb = $event['thumbnail'];
@@ -122,9 +119,7 @@ if (strpos($thumb, 'events/') !== 0) {
                          onerror="this.src='<?= BASE_URL ?>/public/images/placeholder.jpg'">
                 </div>
                 
-                <!-- Event Info -->
                 <div class="event-content">
-                    <!-- Badges -->
                     <div class="mb-3">
                         <span class="badge bg-primary"><?= ucfirst($event['category']) ?></span>
                         <?php if ($event['is_urgent']): ?>
@@ -135,10 +130,8 @@ if (strpos($thumb, 'events/') !== 0) {
                         <?php endif; ?>
                     </div>
                     
-                    <!-- Title -->
                     <h1 class="mb-3"><?= sanitize($event['title']) ?></h1>
                     
-                    <!-- Meta Info -->
                     <div class="d-flex align-items-center text-muted mb-4">
                         <i class="fas fa-user me-2"></i>
                         <span class="me-4">Bởi: <strong><?= sanitize($event['organizer_name']) ?></strong></span>
@@ -150,19 +143,16 @@ if (strpos($thumb, 'events/') !== 0) {
                         <span><?= number_format($event['views']) ?> lượt xem</span>
                     </div>
                     
-                    <!-- Description -->
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle me-2"></i>
                         <strong>Mô tả:</strong> <?= sanitize($event['description']) ?>
                     </div>
                     
-                    <!-- Content -->
                     <div class="event-content-body">
                         <h3>Chi tiết sự kiện</h3>
                         <div><?= $event['content'] ?></div>
                     </div>
                     
-                    <!-- Timeline -->
                     <div class="mt-4 p-3 bg-light rounded">
                         <h5><i class="fas fa-calendar-alt text-danger me-2"></i>Thời gian</h5>
                         <div class="row text-center mt-3">
@@ -177,14 +167,12 @@ if (strpos($thumb, 'events/') !== 0) {
                         </div>
                     </div>
                     
-                    <!-- Location -->
                     <div class="mt-4 p-3 bg-light rounded">
                         <h5><i class="fas fa-map-marker-alt text-danger me-2"></i>Địa điểm</h5>
                         <p class="mb-0"><?= sanitize($event['location']) ?>, <?= sanitize($event['district']) ?>, <?= sanitize($event['province']) ?></p>
                     </div>
                 </div>
                 
-                <!-- Recent Donations -->
                 <div class="event-content mt-3">
                     <h4 class="mb-4">
                         <i class="fas fa-heart text-danger me-2"></i>
@@ -226,9 +214,7 @@ if (strpos($thumb, 'events/') !== 0) {
                 </div>
             </div>
             
-            <!-- Sidebar -->
             <div class="col-lg-4">
-                <!-- Donation Progress -->
                 <div class="sidebar-box">
                     <h5 class="mb-4">
                         <i class="fas fa-chart-line text-danger me-2"></i>
@@ -250,7 +236,6 @@ if (strpos($thumb, 'events/') !== 0) {
                         </div>
                     </div>
                     
-                    <!-- Stats -->
                     <div class="row g-2 mt-4">
                         <div class="col-6">
                             <div class="stat-box">
@@ -266,7 +251,6 @@ if (strpos($thumb, 'events/') !== 0) {
                         </div>
                     </div>
                     
-                    <!-- Donate Button -->
                     <div class="d-grid gap-2 mt-4">
                         <a href="<?= BASE_URL ?>/events/donate.php?event_id=<?= $event['id'] ?>" 
                            class="btn btn-donate">
@@ -275,8 +259,14 @@ if (strpos($thumb, 'events/') !== 0) {
                         </a>
                     </div>
                 </div>
-                
-                <!-- Volunteer Info -->
+
+                <div class="sidebar-box text-center" style="background: #f8f9fa; border: 1px solid #ddd;">
+                    <h5 class="fw-bold text-success mb-2"><i class="fas fa-search-dollar"></i> Sao kê minh bạch</h5>
+                    <p class="text-muted small mb-3">Toàn bộ lịch sử quyên góp và chi tiêu được cập nhật theo thời gian thực.</p>
+                    <a href="export_excel.php?slug=<?= htmlspecialchars($event['slug']) ?>" class="btn btn-outline-success fw-bold w-100">
+                        <i class="fas fa-file-excel me-2"></i> Tải sao kê mới nhất
+                    </a>
+                </div>
                 <?php if ($event['volunteer_needed'] > 0): ?>
                 <div class="sidebar-box">
                     <h5 class="mb-3">
@@ -313,7 +303,6 @@ if (strpos($thumb, 'events/') !== 0) {
                 </div>
                 <?php endif; ?>
                 
-                <!-- Share -->
                 <div class="sidebar-box">
                     <h5 class="mb-3">
                         <i class="fas fa-share-alt text-danger me-2"></i>
@@ -338,7 +327,6 @@ if (strpos($thumb, 'events/') !== 0) {
             </div>
         </div>
         
-        <!-- Back to Events -->
         <div class="text-center mt-4">
             <a href="<?= BASE_URL ?>/events/events.php" class="btn btn-outline-secondary">
                 <i class="fas fa-arrow-left me-2"></i>Quay lại danh sách sự kiện
