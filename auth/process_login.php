@@ -1,9 +1,10 @@
 <?php
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/security.php';
+
 // Chỉ chấp nhận POST request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ' . BASE_URL . '/login.php');
+    header('Location: ' . BASE_URL . '/auth/login.php');
     exit;
 }
 
@@ -18,7 +19,7 @@ $remember = isset($_POST['remember']);
 // Validate input
 if (empty($email) || empty($password)) {
     setFlashMessage('error', 'Vui lòng nhập đầy đủ email và mật khẩu');
-    header('Location: ' . BASE_URL . '/login.php');
+    header('Location: ' . BASE_URL . '/auth/login.php');
     exit;
 }
 
@@ -31,7 +32,12 @@ if ($rateLimit !== true) {
     setFlashMessage('error', $rateLimit['message']);
     
     // Log suspicious activity
-    $logFile = dirname(__DIR__) . '/logs/failed_logins.log';
+    $logDir = dirname(__DIR__) . '/logs';
+    if (!is_dir($logDir)) {
+        mkdir($logDir, 0755, true);
+    }
+    
+    $logFile = $logDir . '/failed_logins.log';
     $logContent = sprintf(
         "[%s] Too many attempts - Email: %s | IP: %s | User Agent: %s\n",
         date('Y-m-d H:i:s'),
@@ -41,7 +47,7 @@ if ($rateLimit !== true) {
     );
     file_put_contents($logFile, $logContent, FILE_APPEND);
     
-    header('Location: ' . BASE_URL . '/login.php');
+    header('Location: ' . BASE_URL . '/auth/login.php');
     exit;
 }
 
@@ -53,14 +59,19 @@ try {
     // Tìm user theo email
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->execute([$email]);
-    $user = $stmt->fetch();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     // Kiểm tra user tồn tại và mật khẩu đúng
     if (!$user || !verifyPassword($password, $user['password'])) {
         // Sai email hoặc mật khẩu
         
         // Log failed login
-        $logFile = dirname(__DIR__) . '/logs/failed_logins.log';
+        $logDir = dirname(__DIR__) . '/logs';
+        if (!is_dir($logDir)) {
+            mkdir($logDir, 0755, true);
+        }
+        
+        $logFile = $logDir . '/failed_logins.log';
         $logContent = sprintf(
             "[%s] Failed Login - Email: %s | IP: %s | Reason: %s\n",
             date('Y-m-d H:i:s'),
@@ -71,7 +82,7 @@ try {
         file_put_contents($logFile, $logContent, FILE_APPEND);
         
         setFlashMessage('error', 'Email hoặc mật khẩu không chính xác');
-        header('Location: ' . BASE_URL . '/login.php');
+        header('Location: ' . BASE_URL . '/auth/login.php');
         exit;
     }
     
@@ -81,13 +92,13 @@ try {
     
     if ($user['status'] === 'inactive') {
         setFlashMessage('error', 'Tài khoản của bạn đã bị vô hiệu hóa. Vui lòng liên hệ quản trị viên.');
-        header('Location: ' . BASE_URL . '/login.php');
+        header('Location: ' . BASE_URL . '/auth/login.php');
         exit;
     }
     
     if ($user['status'] === 'banned') {
         setFlashMessage('error', 'Tài khoản của bạn đã bị khóa do vi phạm điều khoản sử dụng.');
-        header('Location: ' . BASE_URL . '/login.php');
+        header('Location: ' . BASE_URL . '/auth/login.php');
         exit;
     }
     
@@ -128,7 +139,12 @@ try {
     }
     
     // Log successful login
-    $logFile = dirname(__DIR__) . '/logs/logins.log';
+    $logDir = dirname(__DIR__) . '/logs';
+    if (!is_dir($logDir)) {
+        mkdir($logDir, 0755, true);
+    }
+    
+    $logFile = $logDir . '/logins.log';
     $logContent = sprintf(
         "[%s] Successful Login - ID: %d | Email: %s | IP: %s | User Agent: %s\n",
         date('Y-m-d H:i:s'),
@@ -144,7 +160,7 @@ try {
     // =====================================================
     
     // Thông báo thành công
-    setFlashMessage('success', 'Đăng nhập thành công! Chào mừng ' . $user['fullname']);
+    setFlashMessage('success', 'Đăng nhập thành công! Chào mừng ' . htmlspecialchars($user['fullname']));
     
     // Redirect về trang trước đó hoặc trang chủ
     if (isset($_SESSION['redirect_after_login'])) {
@@ -165,10 +181,14 @@ try {
     
 } catch (PDOException $e) {
     // Log error
+    $logDir = dirname(__DIR__) . '/logs';
+    if (!is_dir($logDir)) {
+        mkdir($logDir, 0755, true);
+    }
+    
     error_log("Login Error: " . $e->getMessage());
     
     setFlashMessage('error', 'Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại sau.');
-    header('Location: ' . BASE_URL . '/login.php');
+    header('Location: ' . BASE_URL . '/auth/login.php');
     exit;
 }
-?>
