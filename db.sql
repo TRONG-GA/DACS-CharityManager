@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3309
--- Generation Time: Mar 13, 2026 at 08:09 PM
+-- Generation Time: Mar 16, 2026 at 09:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -103,7 +103,9 @@ INSERT INTO `admin_logs` (`id`, `admin_id`, `action_type`, `action_description`,
 (1, 1, 'benefactor_approve', 'Approved benefactor application for user ID 9', 'benefactor_application', 1, NULL, NULL, NULL, NULL, '2026-03-13 15:04:03'),
 (2, 1, 'event_approve', 'Approved event: test 13-3-2026', 'event', 16, NULL, NULL, NULL, NULL, '2026-03-13 15:07:58'),
 (3, 1, 'event_approve', 'Approved event: test', 'event', 21, NULL, NULL, NULL, NULL, '2026-03-13 15:33:18'),
-(4, 1, 'event_approve', 'Approved event: hihi', 'event', 22, NULL, NULL, NULL, NULL, '2026-03-13 16:03:13');
+(4, 1, 'event_approve', 'Approved event: hihi', 'event', 22, NULL, NULL, NULL, NULL, '2026-03-13 16:03:13'),
+(5, 1, 'benefactor_approve', 'Approved benefactor application for user ID 12', 'benefactor_application', 2, NULL, NULL, NULL, NULL, '2026-03-16 07:37:47'),
+(6, 1, 'event_approve', 'Approved event: Xây trường cho trẻ em vùng cao', 'event', 23, NULL, NULL, NULL, NULL, '2026-03-16 07:39:51');
 
 -- --------------------------------------------------------
 
@@ -134,7 +136,8 @@ CREATE TABLE `admin_notifications` (
 INSERT INTO `admin_notifications` (`id`, `notification_type`, `title`, `message`, `priority`, `related_type`, `related_id`, `action_url`, `is_read`, `read_by`, `read_at`, `auto_dismiss_at`, `created_at`) VALUES
 (1, 'system_alert', 'Event Approved', 'Event \"test 13-3-2026\" has been approved', 'low', 'event', 16, '/admin/events/event_detail.php?id=16', 0, NULL, NULL, NULL, '2026-03-13 15:07:58'),
 (2, 'system_alert', 'Event Approved', 'Event \"test\" has been approved', 'low', 'event', 21, '/admin/events/event_detail.php?id=21', 0, NULL, NULL, NULL, '2026-03-13 15:33:18'),
-(3, 'system_alert', 'Event Approved', 'Event \"hihi\" has been approved', 'low', 'event', 22, '/admin/events/event_detail.php?id=22', 0, NULL, NULL, NULL, '2026-03-13 16:03:13');
+(3, 'system_alert', 'Event Approved', 'Event \"hihi\" has been approved', 'low', 'event', 22, '/admin/events/event_detail.php?id=22', 0, NULL, NULL, NULL, '2026-03-13 16:03:13'),
+(4, 'system_alert', 'Event Approved', 'Event \"Xây trường cho trẻ em vùng cao\" has been approved', 'low', 'event', 23, '/admin/events/event_detail.php?id=23', 0, NULL, NULL, NULL, '2026-03-16 07:39:51');
 
 -- --------------------------------------------------------
 
@@ -275,7 +278,8 @@ CREATE TABLE `benefactor_applications` (
 --
 
 INSERT INTO `benefactor_applications` (`id`, `user_id`, `fullname`, `phone`, `email`, `logo_file`, `documents`, `additional_info`, `full_legal_name`, `id_card_number`, `id_card_front`, `id_card_back`, `date_of_birth`, `place_of_birth`, `address`, `city`, `district`, `ward`, `permanent_address`, `organization_name`, `organization_type`, `tax_code`, `business_license`, `bank_account`, `bank_name`, `bank_owner`, `bank_branch`, `account_holder`, `financial_proof`, `motivation`, `previous_experience`, `expected_activities`, `status`, `rejection_reason`, `admin_notes`, `reviewed_by`, `reviewed_at`, `created_at`, `updated_at`) VALUES
-(1, 9, 'Nguyễn Văn Trọng - 23010817', '0974972206', '23010817@st.phenikaa-uni.edu.vn', 'benefactor_docs/69b42747b0c23_1773414215.jpg', '[\"benefactor_docs\\/69b42747b1069_1773414215.png\"]', '{\"account_type\":\"personal\",\"dob\":\"19-06-2005\",\"social_link\":\"Trọng Gà\",\"role\":\"Sáng lập\",\"club_name\":\"Gà\",\"org_name\":null,\"founding_date\":null,\"website\":null,\"main_field\":null,\"rep_name\":null,\"rep_phone\":null,\"rep_email\":null,\"intro_link\":null,\"description\":\"6\",\"purposes\":[\"voluntary\"],\"commitment\":\"agree\",\"platforms\":[\"momo\"],\"laws\":[\"nd93_2021\"],\"channel\":\"media\"}', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, 'Chính trị xã hội', NULL, NULL, '0974972206', 'MOMO', 'NGUYEN VAN TRONG', NULL, NULL, NULL, NULL, NULL, NULL, 'approved', NULL, '', 1, '2026-03-13 15:04:03', '2026-03-13 15:03:35', '2026-03-13 15:04:03');
+(1, 9, 'Nguyễn Văn Trọng - 23010817', '0974972206', '23010817@st.phenikaa-uni.edu.vn', 'benefactor_docs/69b42747b0c23_1773414215.jpg', '[\"benefactor_docs\\/69b42747b1069_1773414215.png\"]', '{\"account_type\":\"personal\",\"dob\":\"19-06-2005\",\"social_link\":\"Trọng Gà\",\"role\":\"Sáng lập\",\"club_name\":\"Gà\",\"org_name\":null,\"founding_date\":null,\"website\":null,\"main_field\":null,\"rep_name\":null,\"rep_phone\":null,\"rep_email\":null,\"intro_link\":null,\"description\":\"6\",\"purposes\":[\"voluntary\"],\"commitment\":\"agree\",\"platforms\":[\"momo\"],\"laws\":[\"nd93_2021\"],\"channel\":\"media\"}', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, 'Chính trị xã hội', NULL, NULL, '0974972206', 'MOMO', 'NGUYEN VAN TRONG', NULL, NULL, NULL, NULL, NULL, NULL, 'approved', NULL, '', 1, '2026-03-13 15:04:03', '2026-03-13 15:03:35', '2026-03-13 15:04:03'),
+(2, 12, 'Nguyễn Thị Ngọc Bích', '0987846512', 'trong@gmal.com', 'benefactor_docs/69b7b32b1e01a_1773646635.jpg', '[\"benefactor_docs\\/69b7b32b1e915_1773646635.jpg\"]', '{\"account_type\":\"personal\",\"dob\":\"19-06-2005\",\"social_link\":\"Trọng Gà\",\"role\":\"Sáng lập\",\"club_name\":\"Gà\",\"org_name\":null,\"founding_date\":null,\"website\":null,\"main_field\":null,\"rep_name\":null,\"rep_phone\":null,\"rep_email\":null,\"intro_link\":null,\"description\":\"6\",\"purposes\":[\"voluntary\"],\"commitment\":\"agree\",\"platforms\":[\"momo\"],\"laws\":[\"nd93_2021\"],\"channel\":\"media\"}', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, 'Chính trị xã hội', NULL, NULL, '0869468600', 'VPB', 'NGUYEN KIM KHUONG', NULL, NULL, NULL, NULL, NULL, NULL, 'approved', NULL, 'ok', 1, '2026-03-16 07:37:47', '2026-03-16 07:37:15', '2026-03-16 07:37:47');
 
 --
 -- Triggers `benefactor_applications`
@@ -397,7 +401,16 @@ INSERT INTO `donations` (`id`, `user_id`, `event_id`, `donor_name`, `donor_email
 (20, 9, 1, 'ẩn danh', 'test1@gmail.com', NULL, 200000.00, 'hi bé', 'momo', NULL, NULL, 'completed', 1, 1, NULL, NULL, '2026-02-26 14:25:15', '2026-02-26 14:25:15'),
 (21, 9, 3, 'trong', 'test1@gmail.com', '0987456115', 200000.00, 'tuyệt', 'vnpay', NULL, NULL, 'completed', 1, 1, NULL, NULL, '2026-02-26 19:17:28', '2026-02-26 19:17:28'),
 (22, NULL, 1, 'trong', 'test1@gmail.com', '0987456115', 100000.00, 'cos len', 'momo', NULL, NULL, 'completed', 1, 1, NULL, NULL, '2026-03-01 04:27:16', '2026-03-01 04:27:16'),
-(23, 8, 21, 'Nguyễn Văn Trọng', 'tronglen10123456@gmail.com', NULL, 100000.00, 'hi em', 'momo', NULL, NULL, 'completed', 0, 1, NULL, NULL, '2026-03-13 15:36:54', '2026-03-13 15:36:54');
+(23, 8, 21, 'Nguyễn Văn Trọng', 'tronglen10123456@gmail.com', NULL, 100000.00, 'hi em', 'momo', NULL, NULL, 'completed', 0, 1, NULL, NULL, '2026-03-13 15:36:54', '2026-03-13 15:36:54'),
+(24, NULL, 23, 'Nhà hảo tâm ẩn danh', NULL, NULL, 2000.00, 'hi em', 'bank_transfer', NULL, NULL, 'completed', 1, 1, NULL, NULL, '2026-03-16 07:40:45', '2026-03-16 08:03:06'),
+(25, NULL, 23, 'Nhà hảo tâm ẩn danh', NULL, NULL, 2000.00, 'hi em', 'bank_transfer', NULL, NULL, 'completed', 1, 1, NULL, NULL, '2026-03-16 07:46:32', '2026-03-16 07:46:52'),
+(26, 8, 23, 'Nhà hảo tâm ẩn danh', NULL, NULL, 2000.00, 'test', 'bank_transfer', NULL, NULL, 'pending', 1, 1, NULL, NULL, '2026-03-16 08:04:35', '2026-03-16 08:04:35'),
+(27, 8, 23, 'Nhà hảo tâm ẩn danh', NULL, NULL, 2000.00, 'test', 'bank_transfer', NULL, NULL, 'pending', 1, 1, NULL, NULL, '2026-03-16 08:08:07', '2026-03-16 08:08:07'),
+(28, 8, 23, 'Nhà hảo tâm ẩn danh', NULL, NULL, 2000.00, 'hi', 'bank_transfer', NULL, NULL, 'completed', 1, 1, NULL, NULL, '2026-03-16 08:09:09', '2026-03-16 08:09:24'),
+(29, 8, 23, 'Nhà hảo tâm ẩn danh', NULL, NULL, 22000.00, 'ki', 'bank_transfer', NULL, NULL, 'pending', 1, 1, NULL, NULL, '2026-03-16 08:10:42', '2026-03-16 08:10:42'),
+(30, 8, 23, 'Nhà hảo tâm ẩn danh', NULL, NULL, 22000.00, 'hi', 'bank_transfer', NULL, NULL, 'pending', 1, 1, NULL, NULL, '2026-03-16 08:10:54', '2026-03-16 08:10:54'),
+(31, 8, 23, 'Nhà hảo tâm ẩn danh', NULL, NULL, 22000.00, 'no', 'bank_transfer', NULL, NULL, 'pending', 1, 1, NULL, NULL, '2026-03-16 08:11:04', '2026-03-16 08:11:04'),
+(32, 8, 23, 'Nhà hảo tâm ẩn danh', NULL, NULL, 2000.00, 'no', 'bank_transfer', NULL, NULL, 'completed', 1, 1, NULL, NULL, '2026-03-16 08:11:20', '2026-03-16 08:11:38');
 
 --
 -- Triggers `donations`
@@ -517,7 +530,8 @@ INSERT INTO `events` (`id`, `user_id`, `title`, `slug`, `description`, `content`
 (15, 3, 'Mổ mắt miễn phí cho người nghèo', 'mo-mat-mien-phi-nguoi-ngheo', 'Phẫu thuật đục thủy tinh thể miễn phí cho 100 bệnh nhân', '<h3>Chương trình</h3><p>Phẫu thuật đục thủy tinh thể, tặng kính mắt...</p>', 'event15.jpg', NULL, NULL, NULL, NULL, NULL, 'medical', 'Bệnh viện Mắt Trung ương', 'Hà Nội', 'Ba Đình', NULL, NULL, 90000000.00, 72000000.00, 8, 6, NULL, '2026-02-05', '2026-03-18', NULL, 'approved', NULL, 0, 0, 0, 234, 0, NULL, NULL, NULL, '2026-02-25 15:17:28', '2026-02-25 15:17:28', NULL),
 (20, 9, 'test', 'test-1773415449', '<p>trongga</p>', '', 'events/69b42c19e2bbc_1773415449.jpg', NULL, NULL, NULL, NULL, NULL, 'education', '29V5', '', NULL, NULL, NULL, 10000000000.00, 0.00, 0, 0, NULL, '2026-03-13', '2026-03-25', NULL, 'rejected', 'Mục tiêu quyên góp chưa hợp lý', 0, 0, 0, 0, 0, NULL, NULL, NULL, '2026-03-13 15:24:09', '2026-03-13 15:32:09', NULL),
 (21, 9, 'test', 'test-1773415971', '<p>r vsscad</p>', '', 'events/69b42e235c2cd_1773415971.jpg', NULL, NULL, NULL, NULL, NULL, 'medical', '29V5', '', NULL, NULL, NULL, 10000000000.00, 200000.00, 0, 0, NULL, '2026-03-13', '2026-03-25', NULL, 'approved', NULL, 0, 0, 0, 14, 0, NULL, 1, '2026-03-13 15:33:18', '2026-03-13 15:32:51', '2026-03-13 17:25:46', NULL),
-(22, 9, 'hihi', 'hihi-1773417688', '<p>hiii</p>', '', 'events/69b434d8a707e_1773417688.png', NULL, NULL, NULL, NULL, NULL, 'medical', '29V5', '', NULL, NULL, NULL, 1000000000.00, 0.00, 4, 0, NULL, '2026-03-13', '2026-03-25', NULL, 'approved', NULL, 0, 0, 0, 7, 0, NULL, 1, '2026-03-13 16:03:13', '2026-03-13 16:01:28', '2026-03-13 17:25:34', NULL);
+(22, 9, 'hihi', 'hihi-1773417688', '<p>hiii</p>', '', 'events/69b434d8a707e_1773417688.png', NULL, NULL, NULL, NULL, NULL, 'medical', '29V5', '', NULL, NULL, NULL, 1000000000.00, 0.00, 4, 0, NULL, '2026-03-13', '2026-03-25', NULL, 'approved', NULL, 0, 0, 0, 7, 0, NULL, 1, '2026-03-13 16:03:13', '2026-03-13 16:01:28', '2026-03-13 17:25:34', NULL),
+(23, 12, 'Xây trường cho trẻ em vùng cao', 'xay-truong-cho-tre-em-vung-cao-1773646758', '<p>no</p>', '', 'events/69b7b3a6462e4_1773646758.jpg', NULL, NULL, NULL, NULL, NULL, 'education', '29V5', '', NULL, NULL, NULL, 1000000000.00, 10000.00, 5, 0, NULL, '2026-03-16', '2026-03-25', NULL, 'approved', NULL, 0, 0, 0, 11, 0, NULL, 1, '2026-03-16 07:39:51', '2026-03-16 07:39:18', '2026-03-16 08:12:08', NULL);
 
 --
 -- Triggers `events`
@@ -651,7 +665,8 @@ INSERT INTO `event_volunteers` (`id`, `user_id`, `event_id`, `fullname`, `email`
 (17, NULL, 4, 'trong', 'tronglen10123456@gmail.com', '0987846512', NULL, 'male', NULL, '', '[\"Chăm sóc người già\"]', NULL, 'no', 'no', 0, 0, 0, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, 0, NULL, NULL, NULL, '2026-02-28 08:01:54', '2026-02-28 08:01:54'),
 (18, NULL, 4, 'Nguyễn Văn Trọng', '23010817@st.phenikaa-uni.edu.vn', '0911224115', NULL, 'male', '2016-06-07', 'Sinh viên', '[\"Kế toán\"]', NULL, 'no', 'no', 0, 0, 0, NULL, NULL, NULL, 'approved', NULL, NULL, NULL, 0, NULL, NULL, NULL, '2026-02-28 08:05:41', '2026-03-01 06:45:20'),
 (19, NULL, 9, 'Nguyễn Văn Trọng', '23010817@st.phenikaa-uni.edu.vn', '0911224115', NULL, 'male', '2016-06-07', 'Sinh viên', '[\"Y tế cơ bản\"]', NULL, 'no', 'no', 0, 0, 0, NULL, NULL, NULL, 'approved', NULL, NULL, NULL, 0, NULL, NULL, NULL, '2026-02-28 08:08:00', '2026-03-01 06:41:45'),
-(20, 8, 22, 'Nguyễn Văn Trọng', 'tronglen10123456@gmail.com', '0974972206', NULL, 'male', '2005-06-19', 'Sinh viên', '[\"Nấu ăn\"]', NULL, 'có', 'có', 0, 0, 0, NULL, NULL, NULL, 'approved', NULL, '2026-03-13 16:14:47', NULL, 1, NULL, NULL, NULL, '2026-03-13 16:04:24', '2026-03-13 16:14:47');
+(20, 8, 22, 'Nguyễn Văn Trọng', 'tronglen10123456@gmail.com', '0974972206', NULL, 'male', '2005-06-19', 'Sinh viên', '[\"Nấu ăn\"]', NULL, 'có', 'có', 0, 0, 0, NULL, NULL, NULL, 'approved', NULL, '2026-03-13 16:14:47', NULL, 1, NULL, NULL, NULL, '2026-03-13 16:04:24', '2026-03-13 16:14:47'),
+(21, 8, 23, 'Nguyễn Thị Ngọc Bích', 'bich1@gmail.com', '0974972206', NULL, 'female', '2005-09-02', 'Sinh viên', '[\"Nấu ăn\",\"Y tế cơ bản\",\"Sơ cấp cứu\"]', NULL, 'no', 'no', 0, 0, 0, NULL, NULL, NULL, 'rejected', NULL, NULL, NULL, 0, NULL, NULL, NULL, '2026-03-16 07:44:45', '2026-03-16 07:47:53');
 
 -- --------------------------------------------------------
 
@@ -729,7 +744,13 @@ INSERT INTO `notifications` (`id`, `user_id`, `type`, `title`, `message`, `link`
 (11, 1, 'admin', 'Sự kiện mới chờ duyệt', 'trong đã tạo sự kiện \"hihi\" chờ phê duyệt', 'http://localhost/DACS-CharityManager/admin/events/event_detail.php?id=22', 1, NULL, '2026-03-13 16:01:28'),
 (12, 9, 'admin', 'Sự kiện được duyệt', 'Sự kiện \"hihi\" của bạn đã được phê duyệt và hiển thị công khai.', 'http://localhost/DACS-CharityManager/benefactor/events/detail.php?id=22', 0, NULL, '2026-03-13 16:03:13'),
 (13, 8, 'admin', 'Tài khoản bị khóa', 'Tài khoản của bạn đã bị khóa. Lý do: ngu', NULL, 1, NULL, '2026-03-13 18:27:43'),
-(14, 8, 'admin', 'Tài khoản được mở khóa', 'Tài khoản của bạn đã được mở khóa. Bạn có thể đăng nhập trở lại.', NULL, 1, NULL, '2026-03-13 18:28:42');
+(14, 8, 'admin', 'Tài khoản được mở khóa', 'Tài khoản của bạn đã được mở khóa. Bạn có thể đăng nhập trở lại.', NULL, 1, NULL, '2026-03-13 18:28:42'),
+(15, 1, 'admin', 'Đơn đăng ký nhà hảo tâm mới', 'Nguyễn Thị Ngọc Bích đã nộp đơn đăng ký nhà hảo tâm', 'http://localhost/DACS-CharityManager/admin/benefactors/application_detail.php?id=2', 0, NULL, '2026-03-16 07:37:15'),
+(16, 12, 'admin', 'Đơn đăng ký nhà hảo tâm được duyệt', 'Chúc mừng! Đơn đăng ký nhà hảo tâm của bạn đã được phê duyệt. Bạn có thể bắt đầu tạo sự kiện từ thiện ngay bây giờ.', NULL, 1, NULL, '2026-03-16 07:37:47'),
+(17, 12, 'admin', 'Đơn đăng ký nhà hảo tâm được duyệt', 'Chúc mừng! Đơn đăng ký nhà hảo tâm của bạn đã được phê duyệt. Bạn có thể bắt đầu tạo sự kiện từ thiện ngay bây giờ.', 'http://localhost/DACS-CharityManager/benefactor/dashboard.php', 1, NULL, '2026-03-16 07:37:47'),
+(18, 1, 'admin', 'Sự kiện mới chờ duyệt', 'Nguyễn Thị Ngọc Bích đã tạo sự kiện \"Xây trường cho trẻ em vùng cao\" chờ phê duyệt', 'http://localhost/DACS-CharityManager/admin/events/event_detail.php?id=23', 0, NULL, '2026-03-16 07:39:18'),
+(19, 12, 'admin', 'Sự kiện được duyệt', 'Sự kiện \"Xây trường cho trẻ em vùng cao\" của bạn đã được phê duyệt và hiển thị công khai.', 'http://localhost/DACS-CharityManager/benefactor/events/detail.php?id=23', 0, NULL, '2026-03-16 07:39:51'),
+(20, 12, 'donation', 'Có quyên góp mới', 'Sự kiện \"Xây trường cho trẻ em vùng cao\" vừa nhận được quyên góp 2k', NULL, 0, NULL, '2026-03-16 08:03:06');
 
 -- --------------------------------------------------------
 
@@ -775,6 +796,13 @@ CREATE TABLE `rate_limits` (
   `last_attempt_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `rate_limits`
+--
+
+INSERT INTO `rate_limits` (`id`, `action_key`, `attempts`, `first_attempt_at`, `last_attempt_at`) VALUES
+(98, 'login_bich@gmail.com', 2, 1773645903, 1773645910);
+
 -- --------------------------------------------------------
 
 --
@@ -819,7 +847,7 @@ CREATE TABLE `statistics` (
 --
 
 INSERT INTO `statistics` (`id`, `total_events`, `total_donations`, `total_donors`, `total_volunteers`, `total_benefactors`, `updated_at`) VALUES
-(1, 16, 141700000.00, 5, 10, 4, '2026-03-13 16:03:13');
+(1, 17, 141708000.00, 5, 11, 5, '2026-03-16 08:11:38');
 
 -- --------------------------------------------------------
 
@@ -841,7 +869,7 @@ CREATE TABLE `statistics_cache` (
 --
 
 INSERT INTO `statistics_cache` (`id`, `cache_key`, `cache_data`, `expires_at`, `created_at`, `updated_at`) VALUES
-(1, 'dashboard_stats', '{\"total_events\": 15, \"total_donations\": 141700000.00, \"total_donors\": 5, \"total_volunteers\": 10, \"total_benefactors\": 4}', '2026-03-13 16:36:54', '2026-03-13 15:04:03', '2026-03-13 15:36:54');
+(1, 'dashboard_stats', '{\"total_events\": 17, \"total_donations\": 141708000.00, \"total_donors\": 5, \"total_volunteers\": 11, \"total_benefactors\": 5}', '2026-03-16 09:11:38', '2026-03-13 15:04:03', '2026-03-16 08:11:38');
 
 -- --------------------------------------------------------
 
@@ -971,16 +999,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `avatar`, `address`, `bio`, `city`, `district`, `role`, `benefactor_status`, `benefactor_verified_at`, `benefactor_verified_by`, `status`, `last_login`, `created_at`, `updated_at`, `public_profile`, `show_donations`, `show_volunteers`, `email_notifications`, `donation_notifications`, `volunteer_notifications`, `event_notifications`) VALUES
-(1, 'Administrator', 'admin@charityevent.vn', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '', 'avatar_1_1773425581.jpg', '', NULL, NULL, NULL, 'admin', 'none', NULL, NULL, 'active', '2026-03-13 19:06:58', '2026-02-25 15:17:06', '2026-03-13 19:06:58', 1, 1, 1, 1, 1, 1, 1),
+(1, 'Administrator', 'admin@charityevent.vn', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '', 'avatar_1_1773425581.jpg', '', NULL, NULL, NULL, 'admin', 'none', NULL, NULL, 'active', '2026-03-16 08:02:31', '2026-02-25 15:17:06', '2026-03-16 08:02:31', 1, 1, 1, 1, 1, 1, 1),
 (2, 'Nguyễn Văn Hảo', 'benefactor1@test.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0987654321', 'default-avatar.png', NULL, NULL, NULL, NULL, 'benefactor', 'approved', NULL, NULL, 'active', NULL, '2026-02-25 15:17:28', '2026-02-25 15:17:28', 1, 1, 1, 1, 1, 1, 1),
 (3, 'Trần Thị Tâm', 'benefactor2@test.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0912345678', 'default-avatar.png', NULL, NULL, NULL, NULL, 'benefactor', 'approved', NULL, NULL, 'active', NULL, '2026-02-25 15:17:28', '2026-02-25 15:17:28', 1, 1, 1, 1, 1, 1, 1),
 (4, 'Lê Văn Nghĩa', 'benefactor3@test.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0923456789', 'default-avatar.png', NULL, NULL, NULL, NULL, 'benefactor', 'approved', NULL, NULL, 'active', NULL, '2026-02-25 15:17:28', '2026-02-25 15:17:28', 1, 1, 1, 1, 1, 1, 1),
 (5, 'Phạm Minh Anh', 'user1@test.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0934567890', 'default-avatar.png', NULL, NULL, NULL, NULL, 'user', 'none', NULL, NULL, 'active', NULL, '2026-02-25 15:17:28', '2026-02-25 15:17:28', 1, 1, 1, 1, 1, 1, 1),
 (6, 'Hoàng Thị Lan', 'user2@test.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0945678901', 'default-avatar.png', NULL, NULL, NULL, NULL, 'user', 'none', NULL, NULL, 'active', NULL, '2026-02-25 15:17:28', '2026-02-25 15:17:28', 1, 1, 1, 1, 1, 1, 1),
 (7, 'Đặng Quốc Huy', 'user3@test.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0956789012', 'default-avatar.png', NULL, NULL, NULL, NULL, 'user', 'none', NULL, NULL, 'active', NULL, '2026-02-25 15:17:28', '2026-02-25 15:17:28', 1, 1, 1, 1, 1, 1, 1),
-(8, 'Nguyễn Văn Trọng', 'tronglen10123456@gmail.com', '$2y$10$JMeV4qlXRsAjk81FR2BLCe99KjcWpKZY19W/v8SyJR90BT6kJMp5O', '0987846512', 'avatar_8_1773423436.jpg', '', NULL, NULL, NULL, 'user', 'none', NULL, NULL, 'active', '2026-03-13 19:07:47', '2026-02-25 15:21:24', '2026-03-13 19:07:47', 1, 1, 1, 1, 1, 1, 1),
+(8, 'Nguyễn Văn Trọng', 'tronglen10123456@gmail.com', '$2y$10$JMeV4qlXRsAjk81FR2BLCe99KjcWpKZY19W/v8SyJR90BT6kJMp5O', '0987846512', 'avatar_8_1773423436.jpg', '', NULL, NULL, NULL, 'user', 'none', NULL, NULL, 'active', '2026-03-16 08:03:17', '2026-02-25 15:21:24', '2026-03-16 08:03:17', 1, 1, 1, 1, 1, 1, 1),
 (9, 'trong', 'test1@gmail.com', '$2y$10$pmr1GfXsarynIjPJicV3g.gjEY.IbscPYLtbZhaI0hXbSvOP51hNu', '0987846512', 'default-avatar.png', NULL, NULL, NULL, NULL, 'benefactor', 'approved', '2026-03-13 15:04:03', 1, 'active', '2026-03-13 18:29:48', '2026-02-25 15:34:05', '2026-03-13 18:29:48', 1, 1, 1, 1, 1, 1, 1),
-(11, 'Nguyễn Văn Khương', 'comkhuong@gmail.com', '$2y$10$lMRwMHT0MnMsi0BQ796/SeEfhNwL6IoZy2SN//Zer41CoPvUvMXnm', '0952122222', 'default-avatar.png', NULL, NULL, NULL, NULL, 'user', 'none', NULL, NULL, 'active', '2026-03-13 18:55:13', '2026-03-13 18:55:13', '2026-03-13 18:55:13', 1, 1, 1, 1, 1, 1, 1);
+(11, 'Nguyễn Văn Khương', 'comkhuong@gmail.com', '$2y$10$lMRwMHT0MnMsi0BQ796/SeEfhNwL6IoZy2SN//Zer41CoPvUvMXnm', '0952122222', 'default-avatar.png', NULL, NULL, NULL, NULL, 'user', 'none', NULL, NULL, 'active', '2026-03-13 18:55:13', '2026-03-13 18:55:13', '2026-03-13 18:55:13', 1, 1, 1, 1, 1, 1, 1),
+(12, 'Nguyễn Thị Ngọc Bích', 'bich1@gmail.com', '$2y$10$GVZdulOwJnOwShdtpEUdGOPTPW7.2Jk8PFwE1rDfiMgOa4TSzYTCm', '0987455545', 'default-avatar.png', NULL, NULL, NULL, NULL, 'benefactor', 'approved', '2026-03-16 07:37:47', 1, 'active', '2026-03-16 08:13:10', '2026-03-16 07:25:37', '2026-03-16 08:13:10', 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1267,13 +1296,13 @@ ALTER TABLE `user_terms_acceptance`
 -- AUTO_INCREMENT for table `admin_logs`
 --
 ALTER TABLE `admin_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `admin_permissions`
@@ -1297,7 +1326,7 @@ ALTER TABLE `banned_ips`
 -- AUTO_INCREMENT for table `benefactor_applications`
 --
 ALTER TABLE `benefactor_applications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `contacts`
@@ -1315,7 +1344,7 @@ ALTER TABLE `dashboard_widgets`
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `email_templates`
@@ -1327,7 +1356,7 @@ ALTER TABLE `email_templates`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `event_expenses`
@@ -1345,7 +1374,7 @@ ALTER TABLE `event_updates`
 -- AUTO_INCREMENT for table `event_volunteers`
 --
 ALTER TABLE `event_volunteers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -1357,7 +1386,7 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `partners`
@@ -1375,7 +1404,7 @@ ALTER TABLE `password_resets`
 -- AUTO_INCREMENT for table `rate_limits`
 --
 ALTER TABLE `rate_limits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `report_schedules`
@@ -1393,7 +1422,7 @@ ALTER TABLE `statistics`
 -- AUTO_INCREMENT for table `statistics_cache`
 --
 ALTER TABLE `statistics_cache`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `system_settings`
@@ -1417,7 +1446,7 @@ ALTER TABLE `transparency_reports`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user_terms_acceptance`
