@@ -151,7 +151,7 @@ cd DACS-CharityManager
 4. Import file SQL:
    - Click vào database `charity_event`
    - Chọn tab **Import**
-   - Chọn file `database/charity_event.sql`
+   - Chọn file `db.sql`
    - Click **Go**
 
 ### Bước 5: Copy Project vào htdocs
@@ -282,15 +282,15 @@ Sau khi import database, bạn có thể đăng nhập với các tài khoản s
 
 ### Admin
 - **Email:** admin@charityevent.vn
-- **Password:** admin123
+- **Password:** password
 
 ### Benefactor (Nhà hảo tâm đã xác thực)
-- **Email:** benefactor@example.com
-- **Password:** benefactor123
+- **Email:** test1@gmail.com
+- **Password:** Abcde@123
 
 ### User
-- **Email:** user@example.com
-- **Password:** user123
+- **Email:** tronglen10123456@gmail.com
+- **Password:** Abcde@123
 
 **⚠️ Lưu ý:** Đổi mật khẩu ngay sau khi đăng nhập lần đầu!
 
@@ -386,84 +386,184 @@ define('RATE_LIMIT_DURATION', 900); // 15 minutes
 
 ```
 DACS-CharityManager/
+│   .gitignore
+│   db.sql
+│   index.php
+│   README.md
+│   robots.txt
+│   seed_sample_data.sql
+│   structure.txt
 │
-├── admin/                      # Admin dashboard
-│   ├── dashboard.php
-│   ├── users/                  # Quản lý users
-│   ├── news/                   # Quản lý tin tức
-│   ├── events/                 # Quản lý sự kiện
-│   └── includes/               # Admin includes
+├───admin
+│   │   .htaccess.txt
+│   │   dashboard.php
+│   │   index.php
+│   │
+│   ├───benefactors
+│   │       application_detail.php
+│   │       approve_benefactor.php
+│   │       benefactors.php
+│   │       reject_benefactor.php
+│   │
+│   ├───contacts
+│   │       contacts.php
+│   │       reply_contact.php
+│   │
+│   ├───donations
+│   │       donations.php
+│   │       export_donations.php
+│   │       verify_donation.php
+│   │
+│   ├───events
+│   │       all_events.php
+│   │       approve_event.php
+│   │       close_event.php
+│   │       event_detail.php
+│   │       pending_events.php
+│   │       reject_event.php
+│   │       test_index.php
+│   │
+│   ├───includes
+│   │       admin_navbar.php
+│   │       admin_sidebar.php
+│   │
+│   ├───news
+│   │       create_news.php
+│   │       delete_news.php
+│   │       edit_news.php
+│   │       news_list.php
+│   │
+│   ├───reports
+│   │       statistics.php
+│   │
+│   ├───settings
+│   │       general.php
+│   │       partners.php
+│   │       terms.php
+│   │
+│   ├───users
+│   │       ban_user.php
+│   │       edit_user.php
+│   │       users.php
+│   │       user_detail.php
+│   │
+│   └───volunteers
+│           approve_volunteer.php
+│           volunteers.php
 │
-├── auth/                       # Authentication
-│   ├── login.php
-│   ├── register.php
-│   ├── logout.php
-│   └── forgot_password.php
+├───auth
+│       forgot_password.php
+│       login.php
+│       logout.php
+│       process_login.php
+│       process_register.php
+│       register.php
+│       reset_password.php
 │
-├── benefactor/                 # Benefactor dashboard
-│   ├── dashboard.php
-│   ├── create_event.php
-│   ├── my_events.php
-│   ├── ledger.php              # Thu chi
-│   └── volunteers.php
+├───benefactor
+│       .htaccess.txt
+│       create_campaign.php
+│       dashboard.php
+│       financial_report.php
+│       ledger.php
+│       register.php
+│       register0.php
+│       settings.php
+│       tinhnguyen.php
 │
-├── config/                     # Configuration files
-│   ├── db.php                  # Database config
-│   ├── payment.php             # Payment config
-│   ├── email.php               # Email config
-│   └── constants.php
+├───config
+│       .htaccess.txt
+│       constants.php
+│       db.php
 │
-├── events/                     # Public event pages
-│   ├── events.php              # Danh sách sự kiện
-│   ├── event_detail.php        # Chi tiết sự kiện
-│   └── donate.php              # Quyên góp
+├───errors
+│       404.php
 │
-├── includes/                   # Shared includes
-│   ├── header.php
-│   ├── navbar.php
-│   ├── footer.php
-│   ├── security.php            # Security functions
-│   └── functions.php           # Helper functions
+├───events
+│       check_payment.php
+│       debug_log.txt
+│       donate.php
+│       events.php
+│       event_detail.php
+│       export_excel.php
+│       process_donation.php
+│       process_volunteer.php
+│       search_events.php
+│       volunteer_register.php
+│       webhook.php
 │
-├── news/                       # News section
-│   ├── news.php
-│   └── news_detail.php
+├───includes
+│       .htaccess.txt
+│       footer.php
+│       header.php
+│       navbar.php
+│       notification_widget.php
+│       security.php
+│       terms_modal.php
 │
-├── pages/                      # Static pages
-│   ├── about.php
-│   ├── contact.php
-│   ├── faq.php
-│   └── process_contact.php
+├───logs
+│       admin_actions.log
+│       contacts.log
+│       donations.log
+│       emails.log
+│       failed_logins.log
+│       logins.log
+│       password_resets.log
+│       php-errors.log
+│       registrations.log
+│       volunteers.log
+│       volunteer_debug.log
+│       volunteer_process_debug.log
 │
-├── public/                     # Public assets
-│   ├── css/
-│   ├── js/
-│   ├── images/
-│   └── uploads/                # User uploads
-│       ├── avatars/
-│       ├── events/
-│       ├── news/
-│       └── documents/
+├───news
+│       news.php
+│       news_detail.php
 │
-├── users/                      # User dashboard
-│   ├── profile.php
-│   ├── my_donations.php
-│   └── my_volunteers.php
+├───pages
+│       about.php
+│       contact.php
+│       faq.php
+│       how-it-works.php
+│       mission.php
+│       privacy.php
+│       process_contact.php
+│       team.php
+│       terms.php
+│       transparency.php
 │
-├── webhooks/                   # Payment webhooks
-│   └── sepay_webhook.php
+├───public
+│   ├───css
+│   │   │   news-pages.css
+│   │   │   style.css
+│   │   │
+│   │   └───benefactor
+│   │           dashboard.css
+│   │           index.css
+│   │           register.css
+│   │           register0.css
+│   │
+│   ├───js
+│   │       main.js
+│   │
+│   └───uploads
+│       │   .htaccess.txt
+│       │
+│       ├───avatars
+│       ├───benefactor_docs
+│       ├───documents
+│       ├───events
+│       ├───news
+│       └───receipts
 │
-├── database/                   # Database files
-│   └── charity_event.sql       # SQL dump
-│
-├── logs/                       # Application logs
-│   ├── errors.log
-│   ├── donations.log
-│   └── contacts.log
-│
-├── .htaccess                   # Apache config
-├── index.php                   # Homepage
-└── README.md                   # This file
+└───users
+        change_password.php
+        edit_profile.php
+        my_donations.php
+        my_events.php
+        my_volunteers.php
+        notifications.php
+        profile.php
+        settings.php
 ```
 
 ---
@@ -504,19 +604,6 @@ X-Sepay-Signature: <signature>
 
 ---
 
-## 📸 Screenshots
-
-### Homepage
-![Homepage](screenshots/homepage.png)
-
-### Event Listing
-![Events](screenshots/events.png)
-
-### Benefactor Dashboard
-![Dashboard](screenshots/benefactor-dashboard.png)
-
-### Admin Panel
-![Admin](screenshots/admin-panel.png)
 
 ---
 
@@ -620,9 +707,6 @@ Chúng tôi rất hoan nghênh mọi đóng góp! Hãy làm theo các bước sa
 
 ---
 
-## 📜 License
-
-Dự án này được phân phối dưới giấy phép MIT License. Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
 
 ---
 
