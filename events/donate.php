@@ -18,9 +18,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_donation'])) {
         $donor_name = 'Nhà hảo tâm ẩn danh';
     }
     
-    // TẠO LUÔN RECORD PENDING TRONG DATABASE ĐỂ LẤY ID CHUẨN
-    $stmtInsert = $pdo->prepare("INSERT INTO donations (event_id, donor_name, amount, message, payment_method, status, is_anonymous, show_amount) VALUES (?, ?, ?, ?, 'bank_transfer', 'pending', ?, 1)");
-    $stmtInsert->execute([$eventId, $donor_name, $amount, $message, $is_anonymous]);
+    // LẤY USER_ID NẾU ĐANG ĐĂNG NHẬP
+    $user_id = isLoggedIn() ? $_SESSION['user_id'] : null;
+    
+    // TẠO LUÔN RECORD PENDING TRONG DATABASE VỚI USER_ID
+    $stmtInsert = $pdo->prepare("
+        INSERT INTO donations (
+            event_id, user_id, donor_name, amount, message, 
+            payment_method, status, is_anonymous, show_amount
+        ) VALUES (?, ?, ?, ?, ?, 'bank_transfer', 'pending', ?, 1)
+    ");
+    $stmtInsert->execute([
+        $eventId, 
+        $user_id,  // THÊM USER_ID VÀO ĐÂY
+        $donor_name, 
+        $amount, 
+        $message, 
+        $is_anonymous
+    ]);
     $pendingDonationId = $pdo->lastInsertId();
 
     $_SESSION['pending_donation'] = [
@@ -29,7 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_donation'])) {
         'message' => $message,
         'amount' => $amount,
         'event_id' => $eventId,
-        'donation_id' => $pendingDonationId // Lưu lại ID giao dịch
+        'donation_id' => $pendingDonationId,
+        'user_id' => $user_id  // LƯU LUÔN USER_ID VÀO SESSION
     ];
     
     $formSubmitted = true;
